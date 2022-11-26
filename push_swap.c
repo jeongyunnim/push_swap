@@ -14,5 +14,10 @@
 
 int	main(void)
 {
+	int	stack_a[10];
+	int	stack_b[10];
+
+	mamset(stack_a, 0, sizeof(stack_a));
+	mamset(stack_a, 0, sizeof(stack_b));
 	return (0);
 }
