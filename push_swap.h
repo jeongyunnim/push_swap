@@ -21,8 +21,16 @@
 
 typedef struct s_list
 {
+	struct s_list	*previous;
 	struct s_list	*next;
 	int				num;
 }	t_list;
+
+typedef struct	s_list_edge
+{
+	struct s_list	*head;
+	struct s_list	*tail;
+	char			*hi;
+}	t_list_edge;
 
 #endif
