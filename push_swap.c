@@ -16,7 +16,12 @@ int	main(void)
 {
 	int	stack_a[10];
 	int	stack_b[10];
-
+/*
+	1. 덱 구현하기
+	2. push, reverse, swap 등 명령어 구현하기
+	3. 현재 스택의 리스트 출력하여 확인하기.
+	4. 명령어 입력 받아서 수행하기...
+*/
 	mamset(stack_a, 0, sizeof(stack_a));
 	mamset(stack_a, 0, sizeof(stack_b));
 	return (0);

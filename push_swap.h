@@ -19,4 +19,10 @@
 # include <string.h>
 # include <stdlib.h>
 
+typedef struct s_list
+{
+	struct s_list	*next;
+	int				num;
+}	t_list;
+
 #endif
