@@ -30,7 +30,6 @@ typedef struct	s_list_edge
 {
 	struct s_list	*head;
 	struct s_list	*tail;
-	char			*hi;
 }	t_list_edge;
 
 #endif

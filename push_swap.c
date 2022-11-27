@@ -27,27 +27,39 @@ t_list	*ft_lstnew(int num)
 
 void	initialize_edge(t_list_edge *edge)
 {
-	t_list	*head;
-	t_list	*tail;
-	char	hi[] = "HELLO WORLD\n";
-
-	edge->hi = strdup(hi);
-	edge->head = head;
-	edge->tail = tail;
+	edge->head = (t_list *)malloc(sizeof(t_list) * 1);
+	edge->tail = (t_list *)malloc(sizeof(t_list) * 1);
 }
 
-int	main(void)
+int **parse_data(char *data)
+{
+	int	**data_array;
+	int	i;
+
+	i = 0;
+	while (data[i] != '\0')
+	{
+		//if data is white space convert ascii to int.
+		//데이터가 arg[1] arg[2] 이런 식으로 들어오는 경우는 어떻게 하지?
+		//파싱도 개 같구만..
+	}
+	return (data_array);
+}
+
+int	main(int argc, char **argv)
 {
 	t_list_edge edge;
 	int 		i;
 
+	if (argc < 2)
+		return (write(2, "ARGUMENT COUNT ERROR\n", 21));
+	parse_data(argv[1]);
 /*
 	값을 받으면 파싱해서 배열에 담아준다.
 	입력받은 순서대로 덱큐를 만들어 줌.
 */
-	edge.hi = "안녕 세상아\n";
 	initialize_edge(&edge);
-	printf("%s", edge.hi);
+
 /*
 	1. 덱 구현하기.
 	2. push, reverse, swap 등 명령어 구현하기.
