@@ -32,4 +32,10 @@ typedef struct	s_list_edge
 	struct s_list	*tail;
 }	t_list_edge;
 
+typedef struct	s_data
+{
+	int	*arr;
+	int	num;
+}	t_data;
+
 #endif
