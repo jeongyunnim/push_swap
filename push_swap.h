@@ -28,8 +28,10 @@ typedef struct s_list
 
 typedef struct	s_list_edge
 {
-	struct s_list	*head;
-	struct s_list	*tail;
+	struct s_list	*head_a;
+	struct s_list	*tail_a;
+	struct s_list	*head_b;
+	struct s_list	*tail_b;
 }	t_list_edge;
 
 typedef struct	s_data
