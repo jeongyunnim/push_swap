@@ -41,6 +41,62 @@ t_list	*lstnew(int num)
 // 	edge->head_a = swap_b;
 // }
 
+t_list	*pop_head(t_list **head)
+{
+	t_list	*pop;
+
+	pop = *head;
+	*head = (*head)->next;
+	(*head)->previous = NULL;
+	pop->next = NULL;
+	pop->previous = NULL;
+	return (pop);
+}
+
+t_list	*pop_tail(t_list **tail)
+{
+	t_list	*pop;
+
+	pop = *tail;
+	*tail = (*tail)->previous;
+	(*tail)->next = NULL;
+	pop->next = NULL;
+	pop->previous = NULL;
+	return (pop);
+}
+
+void	append_head(t_list **head, t_list **tail, t_list *new)
+{
+	if (*head == NULL)
+	{
+		*head = new;
+		*tail = new;
+	}
+	else
+	{
+		(*head)->previous = new;
+		new->next = *head;
+		*head = new;
+		(*head)->previous = NULL;
+	}
+}
+
+void	append_tail(t_list **head, t_list **tail, t_list *new)
+{
+	if (*tail == NULL)
+	{
+		*head = new;
+		*tail = new;
+	}
+	else
+	{
+		(*tail)->next = new;
+		new->previous = *tail;
+		*tail = new;
+		(*tail)->next = NULL;
+	}
+}
+
 void	sa(t_list_edge *edge)
 {
 	int	temp;
@@ -135,62 +191,6 @@ void	rrr(t_list_edge *edge)
 {
 	rra(edge);
 	rrb(edge);
-}
-
-t_list	*pop_head(t_list **head)
-{
-	t_list	*pop;
-
-	pop = *head;
-	*head = (*head)->next;
-	(*head)->previous = NULL;
-	pop->next = NULL;
-	pop->previous = NULL;
-	return (pop);
-}
-
-t_list	*pop_tail(t_list **tail)
-{
-	t_list	*pop;
-
-	pop = *tail;
-	*tail = (*tail)->previous;
-	(*tail)->next = NULL;
-	pop->next = NULL;
-	pop->previous = NULL;
-	return (pop);
-}
-
-void	append_head(t_list **head, t_list **tail, t_list *new)
-{
-	if (*head == NULL)
-	{
-		*head = new;
-		*tail = new;
-	}
-	else
-	{
-		(*head)->previous = new;
-		new->next = *head;
-		*head = new;
-		(*head)->previous = NULL;
-	}
-}
-
-void	append_tail(t_list **head, t_list **tail, t_list *new)
-{
-	if (*tail == NULL)
-	{
-		*head = new;
-		*tail = new;
-	}
-	else
-	{
-		(*tail)->next = new;
-		new->previous = *tail;
-		*tail = new;
-		(*tail)->next = NULL;
-	}
 }
 
 
@@ -298,7 +298,7 @@ void    arr_to_deque(t_data data, t_list_edge *edge)
 		append_tail(&(edge->head_a), &(edge->tail_a), new);
 	}
 	print_list(edge);
-	ra(edge);
+	rra(edge);
 	print_list(edge);
 }
 
