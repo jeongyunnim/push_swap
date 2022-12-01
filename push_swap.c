@@ -45,48 +45,154 @@ void	sa(t_list_edge *edge)
 {
 	int	temp;
 
+	if (edge->head_a == NULL)
+		return ;
 	temp = edge->head_a->next->num;
 	edge->head_a->next->num = edge->head_a->num;
 	edge->head_a->num = temp;
 }
 
-void	ra(t_list_edge *edge)
+void	sb(t_list_edge *edge)
 {
-	t_list	*swap_head;
-	t_list	*swap_tail;
+	int	temp;
 
-	printf("do ra\n");
-	swap_head = edge->head_a;
-	swap_tail = edge->tail_a;
-	swap_tail->next = swap_head->next;
-	swap_head->next->previous = swap_tail;
-	swap_tail->previous->next = swap_head;
-	swap_head->previous = swap_tail->previous;
-	swap_head->next = NULL;
-	swap_tail->previous = NULL;
-	edge->head_a = swap_tail;
-	edge->tail_a = swap_head;
+	if (edge->head_b == NULL)
+		return ;
+	temp = edge->head_b->next->num;
+	edge->head_b->next->num = edge->head_b->num;
+	edge->head_b->num = temp;
 }
 
-void	lst_add_back(t_list_edge *edge, int num)
+void	ss(t_list_edge *edge)
 {
-	t_list	*temp;
+	sa(edge);
+	sb(edge);
+}
 
-	temp = lstnew(num);
-	if (temp == NULL)
+void	pa(t_list_edge *edge)
+{
+	t_list	*target;
+
+	if (edge->head_b == NULL)
 		return ;
+	target = pop_head(&(edge->head_b));
+	append_head(&(edge->head_a), &(edge->head_a), target);
+}
+
+void	pb(t_list_edge *edge)
+{
+	t_list	*target;
+
 	if (edge->head_a == NULL)
+		return ;
+	target = pop_head(&(edge->head_a));
+	append_head(&(edge->head_b), &(edge->head_b), target);
+}
+
+void	ra(t_list_edge *edge)
+{
+	t_list	*target;
+
+	if (edge->head_a == edge->tail_a)
+		return ;
+	target = pop_head(&(edge->head_a));
+	append_tail(&(edge->head_a), &(edge->tail_a), target);
+}
+
+void	rb(t_list_edge *edge)
+{
+	t_list	*target;
+
+	if (edge->head_b == edge->tail_b)
+		return ;
+	target = pop_head(&(edge->head_b));
+	append_tail(&(edge->head_b), &(edge->tail_b), target);
+}
+
+void	rr(t_list_edge *edge)
+{
+	ra(edge);
+	rb(edge);
+}
+
+void	rra(t_list_edge *edge)
+{
+	t_list	*target;
+
+	target = pop_tail(&(edge->tail_a));
+	append_head(&(edge->head_a), &(edge->head_a), target);
+}
+
+void	rrb(t_list_edge *edge)
+{
+	t_list	*target;
+
+	target = pop_tail(&(edge->tail_b));
+	append_head(&(edge->head_b), &(edge->head_b), target);
+}
+
+void	rrr(t_list_edge *edge)
+{
+	rra(edge);
+	rrb(edge);
+}
+
+t_list	*pop_head(t_list **head)
+{
+	t_list	*pop;
+
+	pop = *head;
+	*head = (*head)->next;
+	(*head)->previous = NULL;
+	pop->next = NULL;
+	pop->previous = NULL;
+	return (pop);
+}
+
+t_list	*pop_tail(t_list **tail)
+{
+	t_list	*pop;
+
+	pop = *tail;
+	*tail = (*tail)->previous;
+	(*tail)->next = NULL;
+	pop->next = NULL;
+	pop->previous = NULL;
+	return (pop);
+}
+
+void	append_head(t_list **head, t_list **tail, t_list *new)
+{
+	if (*head == NULL)
 	{
-		edge->head_a = temp;
-		edge->tail_a = temp;
+		*head = new;
+		*tail = new;
 	}
 	else
 	{
-		edge->tail_a->next = temp;//마지막을 가리키던 tail_a의 next에 현재 만든 노드를 가리키게 한다.
-		temp->previous = edge->tail_a;//현재 만든 노드를 이전의 tail_a을 가리키게한다.
-		edge->tail_a = temp; //tail에 현재 노드를 가리키게 한다.
+		(*head)->previous = new;
+		new->next = *head;
+		*head = new;
+		(*head)->previous = NULL;
 	}
 }
+
+void	append_tail(t_list **head, t_list **tail, t_list *new)
+{
+	if (*tail == NULL)
+	{
+		*head = new;
+		*tail = new;
+	}
+	else
+	{
+		(*tail)->next = new;
+		new->previous = *tail;
+		*tail = new;
+		(*tail)->next = NULL;
+	}
+}
+
 
 int	ft_isspace(char	c)
 {
@@ -180,30 +286,19 @@ void	print_list(t_list_edge *edge)
 	printf("head_a: %d | tail: %d\n", edge->head_a->num, edge->tail_a->num);
 }
 
-//void	make_b_deque(t_list_edge *edge)
-//{
-//	t_list	temp;
-
-//	temp = edge->head_a;
-//	while (temp != NULL)
-//	{
-//		edge.head_b
-//		tamp = temp->next;
-//	}
-//}
-
 void    arr_to_deque(t_data data, t_list_edge *edge)
 {
 	int 	i;
+	t_list	*new;
 
 	i = -1;
 	while (++i < data.num)
 	{
-		lst_add_back(edge, data.arr[i]);
+		new = lstnew(data.arr[i]);
+		append_tail(&(edge->head_a), &(edge->tail_a), new);
 	}
-	//make_b_deque(edge);
 	print_list(edge);
-	sa(edge);
+	ra(edge);
 	print_list(edge);
 }
 
@@ -211,7 +306,6 @@ int	main(int argc, char **argv)
 {
 	t_list_edge edge;
 	t_data		data;
-	char		hihi[100];
 	int 		i;
 
 	if (argc < 2)
@@ -220,7 +314,7 @@ int	main(int argc, char **argv)
 	if (data.arr == NULL)
 		return (write(2, "ALLOCATE ERROR\n", 15));
 	i = -1;
-	edge.head_a = NULL;
+	memset(&edge, 0, sizeof(edge));
 	printf("data.num: %d\n", data.num);
 	while (++i < data.num)
 	{
