@@ -25,21 +25,21 @@ t_list	*lstnew(int num)
 	return (link);
 }
 
-//void	sa(t_list_edge *edge)
-//{
-//	t_list	*swap_a;
-//	t_list	*swap_b;
+// void	sa(t_list_edge *edge)
+// {
+// 	t_list	*swap_a;
+// 	t_list	*swap_b;
 
-//	printf("do sa\n");
-//	swap_a = edge->head_a;
-//	swap_b = edge->head_a->next;
-//	swap_a->next = swap_b->next;
-//	swap_a->previous = swap_b;
-//	swap_b->next->previous = swap_a;
-//	swap_b->next = swap_a;
-//	swap_b->previous = NULL;
-//	edge->head_a = swap_b;
-//}
+// 	printf("do sa\n");
+// 	swap_a = edge->head_a;
+// 	swap_b = edge->head_a->next;
+// 	swap_a->next = swap_b->next;
+// 	swap_a->previous = swap_b;
+// 	swap_b->next->previous = swap_a;
+// 	swap_b->next = swap_a;
+// 	swap_b->previous = NULL;
+// 	edge->head_a = swap_b;
+// }
 
 void	sa(t_list_edge *edge)
 {
@@ -48,7 +48,6 @@ void	sa(t_list_edge *edge)
 	temp = edge->head_a->next->num;
 	edge->head_a->next->num = edge->head_a->num;
 	edge->head_a->num = temp;
-	
 }
 
 void	ra(t_list_edge *edge)
@@ -212,6 +211,7 @@ int	main(int argc, char **argv)
 {
 	t_list_edge edge;
 	t_data		data;
+	char		hihi[100];
 	int 		i;
 
 	if (argc < 2)
