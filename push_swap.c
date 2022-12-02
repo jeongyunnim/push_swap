@@ -25,28 +25,16 @@ t_list	*lstnew(int num)
 	return (link);
 }
 
-// void	sa(t_list_edge *edge)
-// {
-// 	t_list	*swap_a;
-// 	t_list	*swap_b;
-
-// 	printf("do sa\n");
-// 	swap_a = edge->head_a;
-// 	swap_b = edge->head_a->next;
-// 	swap_a->next = swap_b->next;
-// 	swap_a->previous = swap_b;
-// 	swap_b->next->previous = swap_a;
-// 	swap_b->next = swap_a;
-// 	swap_b->previous = NULL;
-// 	edge->head_a = swap_b;
-// }
-
 t_list	*pop_head(t_list **head)
 {
 	t_list	*pop;
 
 	pop = *head;
+	if (pop == NULL)
+		return (NULL);
 	*head = (*head)->next;
+	if (*head == NULL)
+		return (NULL);
 	(*head)->previous = NULL;
 	pop->next = NULL;
 	pop->previous = NULL;
@@ -58,7 +46,11 @@ t_list	*pop_tail(t_list **tail)
 	t_list	*pop;
 
 	pop = *tail;
+	if (pop == NULL)
+		return (NULL);
 	*tail = (*tail)->previous;
+	if (*tail == NULL)
+		return (NULL);
 	(*tail)->next = NULL;
 	pop->next = NULL;
 	pop->previous = NULL;
@@ -132,7 +124,7 @@ void	pa(t_list_edge *edge)
 	if (edge->head_b == NULL)
 		return ;
 	target = pop_head(&(edge->head_b));
-	append_head(&(edge->head_a), &(edge->head_a), target);
+	append_head(&(edge->head_a), &(edge->tail_a), target);
 }
 
 void	pb(t_list_edge *edge)
@@ -142,7 +134,7 @@ void	pb(t_list_edge *edge)
 	if (edge->head_a == NULL)
 		return ;
 	target = pop_head(&(edge->head_a));
-	append_head(&(edge->head_b), &(edge->head_b), target);
+	append_head(&(edge->head_b), &(edge->tail_b), target);
 }
 
 void	ra(t_list_edge *edge)
@@ -263,16 +255,22 @@ t_data parse_data(char *data)
 	return (data_set);
 }
 
-void	print_list(t_list_edge *edge)
+void	print_list_a(t_list_edge *edge)
 {
-	int i;
 	t_list	*temp;
+	int i;
 	
+	printf("============A===========\n");
 	i = 0;
 	temp = edge->head_a;
+	if (temp == NULL)
+	{
+		printf("EMPTY\n");
+		return ;
+	}
 	while (temp != NULL)
 	{ 
-		printf("%d번째 node: %d\n", i++, temp->num);
+		printf("A[%d]: %d\n", i++, temp->num);
 		temp = temp->next;
 	}
 	temp = edge->tail_a;
@@ -280,10 +278,39 @@ void	print_list(t_list_edge *edge)
 	i--;
 	while (temp != NULL)
 	{
-		printf("%d번째 node: %d\n", i--, temp->num);
+		printf("A[%d]: %d\n", i--, temp->num);
 		temp = temp->previous;
 	}
-	printf("head_a: %d | tail: %d\n", edge->head_a->num, edge->tail_a->num);
+	printf("head_a: %d | tail_a: %d\n", edge->head_a->num, edge->tail_a->num);
+}
+
+void	print_list_b(t_list_edge *edge)
+{
+	t_list	*temp;
+	int i;
+	
+	printf("============B===========\n");
+	i = 0;
+	temp = edge->head_b;
+	if (temp == NULL)
+	{
+		printf("EMPTY\n");
+		return ;
+	}
+	while (temp != NULL)
+	{ 
+		printf("B[%d]: %d\n", i++, temp->num);
+		temp = temp->next;
+	}
+	temp = edge->tail_b;
+	printf("========================\n");
+	i--;
+	while (temp != NULL)
+	{
+		printf("B[%d]: %d\n", i--, temp->num);
+		temp = temp->previous;
+	}
+	printf("head_b: %d | tail_b: %d\n", edge->head_b->num, edge->tail_b->num);
 }
 
 void    arr_to_deque(t_data data, t_list_edge *edge)
@@ -297,9 +324,52 @@ void    arr_to_deque(t_data data, t_list_edge *edge)
 		new = lstnew(data.arr[i]);
 		append_tail(&(edge->head_a), &(edge->tail_a), new);
 	}
-	print_list(edge);
-	rra(edge);
-	print_list(edge);
+	//print_list_a(edge);
+	//print_list_b(edge);
+	//pb(edge);
+	//pb(edge);
+	//pb(edge);
+	//sb(edge);
+	//print_list_a(edge);
+	//print_list_b(edge);
+}
+
+void	free_all(t_data *data, t_list_edge *edge)
+{
+	t_list	*temp;
+	
+	if (data->arr != NULL)
+		free(data->arr);
+	data->arr = NULL;
+	temp = edge->head_a;
+	while (temp != NULL)
+	{
+		temp = pop_head(&(edge->head_a));
+		free(temp);
+	}
+	while (temp != NULL)
+	{
+		temp = pop_head(&(edge->head_b));
+		free(temp);
+	}
+	edge->tail_a = NULL;
+	edge->tail_b = NULL;
+}
+
+void	quick_sort(t_data data, int L, int R)
+{
+	int	pivot;
+
+	pivot = data.arr[(L+R)/2];
+	printf("pivot: %d\n", pivot);
+	while (data.arr[L] < pivot)
+		L++;
+	while (data.arr[R] > pivot)
+		R++;
+	if (L <= R)
+		swap(data.arr, L, R);
+	//여기 하다가 말았다.
+	quick_sort(data, L, R);
 }
 
 int	main(int argc, char **argv)
@@ -320,13 +390,8 @@ int	main(int argc, char **argv)
 	{
 		printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	}
+	quick_sort(data, 0, data.num);
     arr_to_deque(data, &edge);
-	free(data.arr);
-/*
-	1. 덱 구현하기. - 배열의 요소를 덱에 넣어보기.
-	2. push, reverse, swap 등 명령어 구현하기.
-	3. 현재 스택의 리스트 출력하여 확인하기.
-	4. 명령어 입력 받아서 수행하기... -> 명령어 대기?
-*/
+	free_all(&data, &edge);
 	return (0);
 }
