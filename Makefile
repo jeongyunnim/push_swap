@@ -2,7 +2,9 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g3 -fsanitize=address
 NAME	=	./push_swap
 INC		=	./push_swap.h
-SRC		=	./push_swap.c
+SRC		=	./push_swap.c\
+			./deque.c\
+			
 OBJ		=	$(SRC:%.c=%.o)
 RM		=	rm -f
 
