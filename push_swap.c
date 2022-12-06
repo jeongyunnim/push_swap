@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/06 19:13:51 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/06 20:27:01 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,34 @@ void	swap(int *x, int *y)
 	*y = temp;
 }
 
-void	quick_sort_recursion_deque(t_list_edge *edge, int pivot)
+void	quick_sort_recursion_deque(t_list_edge *edge, int pivot, int count)
 {
 	t_list	*temp;
+	int		ra_index;
+	int		pa_index;
 
 	temp = edge->head_a;
-	while (temp != NULL)
+	ra_index = 0;
+	pa_index = 0;
+	while (i < count)
 	{
-		if (temp.num > pivot)
-			sa(edge);
-		else
+		if (temp->num > pivot)
+		{
+			ra_index++;
 			ra(edge);
+		}
+		else
+		{
+			pa_index++;
+			pa(edge);
+		}
+		if (temp->num == pivot)
+		{
+			rb(edge);
+		}
 		temp = temp->next;
 	}
+	
 }
 
 void	quick_sort_deque(t_list_edge *edge, t_data data)
@@ -132,7 +147,7 @@ void	quick_sort_deque(t_list_edge *edge, t_data data)
 	int	pivot;
 
 	pivot = data.arr[data.num / 2];
-	quick_sort_recursion_deque(edge, pivot);
+	quick_sort_recursion_deque(edge, pivot, data.num);
 }
 
 int	partition(int *arr, int L, int R)

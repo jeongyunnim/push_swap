@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:19:03 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/03 15:24:24 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/06 19:42:48 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ void    arr_to_deque(t_data data, t_list_edge *edge)
 	{
 		new = lstnew(data.arr[i]);
 		append_tail(&(edge->head_a), &(edge->tail_a), new);
+		edge->head_a->index = i;
 	}
 	//print_list_a(edge);
 	//print_list_b(edge);

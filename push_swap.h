@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/03 15:22:30 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/06 19:40:57 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_list
 {
 	struct s_list	*previous;
 	struct s_list	*next;
+	int				index;
 	int				num;
 }	t_list;
 
