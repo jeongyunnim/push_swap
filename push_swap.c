@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/04 15:14:48 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/06 19:13:51 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,29 @@ void	swap(int *x, int *y)
 	temp = *x;
 	*x = *y;
 	*y = temp;
+}
+
+void	quick_sort_recursion_deque(t_list_edge *edge, int pivot)
+{
+	t_list	*temp;
+
+	temp = edge->head_a;
+	while (temp != NULL)
+	{
+		if (temp.num > pivot)
+			sa(edge);
+		else
+			ra(edge);
+		temp = temp->next;
+	}
+}
+
+void	quick_sort_deque(t_list_edge *edge, t_data data)
+{
+	int	pivot;
+
+	pivot = data.arr[data.num / 2];
+	quick_sort_recursion_deque(edge, pivot);
 }
 
 int	partition(int *arr, int L, int R)
