@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/07 17:16:56 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/07 17:33:56 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 	temp = edge->head_b;
 	rb_index = 0;
 	pb_index = 0;
-
 	if (range <= 1)
 	{
 		return ;
@@ -144,9 +143,8 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 	{
 		if (edge->head_b->num < edge->head_b->next->num)
 			sb(&(edge->head_a));
-		return ;
 	}
-	define_pivot(edge, data);
+	define_pivot(edge, data, range);
 	while (rb_index + pb_index < range)
 	{
 		if (temp->num > pivot)
@@ -192,7 +190,7 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 			sa(&(edge->head_a));
 		return ;
 	}
-	define_pivot(edge, data);
+	define_pivot(edge, data, range);
 	while (ra_index + pa_index < range)
 	{
 		if (temp->num > pivot)
@@ -216,11 +214,32 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 	B_to_A(edge, data, pa_index);
 }
 
-int	define_pivot(t_list_edge *edge, t_data data)
+int	define_pivot(t_list_edge *edge, t_data data, int range)
 {
-	int	pivot;
+	t_list	*temp;
+	int		i;
+	int		max;
+	int		pivot;
 
-	return (pivot);
+	i = 0;
+	temp = edge->head_a;
+	max = temp->num;
+	if (temp != NULL && i < range)
+	{
+		if (temp->num > max)
+		{
+			max = temp->num;
+		}
+		temp = temp->next;
+		i++;
+	}
+	i = 0;
+	while (i++ < data.num)
+	{
+		if (data.arr[i] == max)
+			return (data.arr[i]);
+	}
+	return (-9999); // define 해야 함
 }
 
 int	partition(int *arr, int L, int R)
