@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/06 21:55:40 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/07 17:16:56 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,53 @@ void	sort_in_deque_a(t_list_edge *edge, int pa_index)
 	}
 }
 
-void	A_to_B(t_list_edge *edge, int range)
+void	B_to_A(t_list_edge *edge, t_data data, int range)
+{
+	t_list	*temp;
+	int		rb_index;
+	int		pb_index;
+	int		pivot;
+	int		i;
+
+	temp = edge->head_b;
+	rb_index = 0;
+	pb_index = 0;
+
+	if (range <= 1)
+	{
+		return ;
+	}
+	else if (range == 2)
+	{
+		if (edge->head_b->num < edge->head_b->next->num)
+			sb(&(edge->head_a));
+		return ;
+	}
+	define_pivot(edge, data);
+	while (rb_index + pb_index < range)
+	{
+		if (temp->num > pivot)
+		{
+			rb_index++;
+			rb(edge);
+		}
+		else
+		{
+			pb_index++;
+			pb(edge);
+		}
+		temp = temp->next;
+	}
+	i = 0;
+	while (i++ < rb_index)
+	{
+		rrb(edge);
+	}
+	A_to_B(edge, data, pb_index);
+	B_to_A(edge, data, rb_index);
+}
+
+void	A_to_B(t_list_edge *edge, t_data data, int range)
 {
 	t_list	*temp;
 	int		ra_index;
@@ -136,7 +182,18 @@ void	A_to_B(t_list_edge *edge, int range)
 	ra_index = 0;
 	pa_index = 0;
 
-	while (ra_index + pa_index + 1 < range)
+	if (range <= 1)
+	{
+		return ;
+	}
+	else if (range == 2)
+	{
+		if (edge->head_a->num < edge->head_a->next->num)
+			sa(&(edge->head_a));
+		return ;
+	}
+	define_pivot(edge, data);
+	while (ra_index + pa_index < range)
 	{
 		if (temp->num > pivot)
 		{
@@ -148,10 +205,6 @@ void	A_to_B(t_list_edge *edge, int range)
 			pa_index++;
 			pa(edge);
 		}
-		if (temp->num == pivot)
-		{
-			rb(edge);
-		}
 		temp = temp->next;
 	}
 	i = 0;
@@ -159,16 +212,15 @@ void	A_to_B(t_list_edge *edge, int range)
 	{
 		rra(edge);
 	}
-	A_to_B(edge, pivot, ra_index);
-	B_to_A(edge, pivot, pa_index);
+	A_to_B(edge, data, ra_index);
+	B_to_A(edge, data, pa_index);
 }
 
-void	quick_sort_deque(t_list_edge *edge, t_data data)
+int	define_pivot(t_list_edge *edge, t_data data)
 {
 	int	pivot;
 
-	pivot = data.arr[data.num / 2];
-	quick_sort_recursion_deque(edge, pivot, 0, data.num);
+	return (pivot);
 }
 
 int	partition(int *arr, int L, int R)
