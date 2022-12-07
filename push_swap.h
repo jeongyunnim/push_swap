@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/06 21:29:30 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/07 19:32:47 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,8 @@ void	rrr(t_list_edge *edge);
 void	print_list_a(t_list_edge *edge);
 void	print_list_b(t_list_edge *edge);
 void    arr_to_deque(t_data data, t_list_edge *edge);
+
+void	B_to_A(t_list_edge *edge, t_data data, int range);
+void	A_to_B(t_list_edge *edge, t_data data, int range);
 
 #endif

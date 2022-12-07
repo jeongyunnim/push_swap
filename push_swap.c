@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/07 17:34:36 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/07 20:39:44 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,64 @@ void	sort_in_deque_a(t_list_edge *edge, int pa_index)
 	}
 }
 
+int	define_pivot_a(t_list_edge *edge, t_data data, int range)
+{
+	t_list	*temp;
+	int		i;
+	int		max;
+	int		pivot;
+
+	i = 0;
+	temp = edge->head_a;
+	max = temp->num;
+	while (temp != NULL && i < range)
+	{
+		if (temp->num > max)
+		{
+			max = temp->num;
+		}
+		temp = temp->next;
+		i++;
+	}
+	i = 0;
+	while (i++ < data.num)
+	{
+		if (data.arr[i] == max)
+			break;
+	}
+	pivot = data.arr[i - (range / 2)];
+	return (pivot);
+}
+
+int	define_pivot_b(t_list_edge *edge, t_data data, int range)
+{
+	t_list	*temp;
+	int		i;
+	int		max;
+	int		pivot;
+
+	i = 0;
+	temp = edge->head_b;
+	max = temp->num;
+	if (temp != NULL && i < range)
+	{
+		if (temp->num > max)
+		{
+			max = temp->num;
+		}
+		temp = temp->next;
+		i++;
+	}
+	i = 0;
+	while (i++ < data.num)
+	{
+		if (data.arr[i] == max)
+			break;
+	}
+	pivot = data.arr[i - (range / 2)];
+	return (pivot);
+}
+
 void	B_to_A(t_list_edge *edge, t_data data, int range)
 {
 	t_list	*temp;
@@ -142,25 +200,26 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 	else if (range == 2)
 	{
 		if (edge->head_b->num < edge->head_b->next->num)
-			sb(&(edge->head_a));
+			sb(edge);
 	}
-	define_pivot(edge, data, range);
+	pivot = define_pivot_b(edge, data, range);
 	while (rb_index + pb_index < range)
 	{
 		if (temp->num > pivot)
 		{
 			rb_index++;
+			temp = temp->next;
 			rb(edge);
 		}
 		else
 		{
 			pb_index++;
+			temp = temp->next;
 			pb(edge);
 		}
-		temp = temp->next;
 	}
-	i = 0;
-	while (i++ < rb_index)
+	i = -1;
+	while (++i < rb_index)
 	{
 		rrb(edge);
 	}
@@ -179,7 +238,6 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 	temp = edge->head_a;
 	ra_index = 0;
 	pa_index = 0;
-
 	if (range <= 1)
 	{
 		return ;
@@ -187,59 +245,32 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 	else if (range == 2)
 	{
 		if (edge->head_a->num < edge->head_a->next->num)
-			sa(&(edge->head_a));
+			sa(edge);
 		return ;
 	}
-	define_pivot(edge, data, range);
+	pivot = define_pivot_a(edge, data, range);
 	while (ra_index + pa_index < range)
 	{
 		if (temp->num > pivot)
 		{
 			ra_index++;
+			temp = temp->next;
 			ra(edge);
 		}
 		else
 		{
 			pa_index++;
+			temp = temp->next;
 			pa(edge);
 		}
-		temp = temp->next;
 	}
-	i = 0;
-	while (i++ < ra_index)
+	i = -1;
+	while (++i < ra_index)
 	{
 		rra(edge);
 	}
 	A_to_B(edge, data, ra_index);
 	B_to_A(edge, data, pa_index);
-}
-
-int	define_pivot(t_list_edge *edge, t_data data, int range)
-{
-	t_list	*temp;
-	int		i;
-	int		max;
-	int		pivot;
-
-	i = 0;
-	temp = edge->head_a;
-	max = temp->num;
-	if (temp != NULL && i < range)
-	{
-		if (temp->num > max)
-		{
-			max = temp->num;
-		}
-		temp = temp->next;
-		i++;
-	}
-	i = 0;
-	while (i++ < data.num)
-	{
-		if (data.arr[i] == max)
-			return (data.arr[i]);
-	}
-	return (-9999); // define 해야 함
 }
 
 int	partition(int *arr, int L, int R)
@@ -270,7 +301,6 @@ void	quick_sort_recursive(int *arr, int L, int R)
 	int	i;
 
 	i = L;
-	printf("recursived: ");
 	while (i < R)
 		printf("%d ", arr[i++]);
 	printf("\n");
@@ -312,6 +342,11 @@ int	main(int argc, char **argv)
 		printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	}
     arr_to_deque(data, &edge);
+	print_list_a(&edge);
+	print_list_b(&edge);
+	A_to_B(&edge, data, data.num);
+	print_list_a(&edge);
+	print_list_b(&edge);
 	free_all(&data, &edge);
 	return (0);
 }

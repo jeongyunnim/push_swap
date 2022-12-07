@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:19:03 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/06 19:42:48 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/07 20:56:21 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,20 +121,20 @@ void	pa(t_list_edge *edge)
 {
 	t_list	*target;
 
-	if (edge->head_b == NULL)
+	if (edge->head_a == NULL)
 		return ;
-	target = pop_head(&(edge->head_b));
-	append_head(&(edge->head_a), &(edge->tail_a), target);
+	target = pop_head(&(edge->head_a));
+	append_head(&(edge->head_b), &(edge->tail_b), target);
 }
 
 void	pb(t_list_edge *edge)
 {
 	t_list	*target;
 
-	if (edge->head_a == NULL)
+	if (edge->head_b == NULL)
 		return ;
 	target = pop_head(&(edge->head_a));
-	append_head(&(edge->head_b), &(edge->tail_b), target);
+	append_head(&(edge->head_a), &(edge->tail_a), target);
 }
 
 void	ra(t_list_edge *edge)
@@ -168,6 +168,11 @@ void	rra(t_list_edge *edge)
 	t_list	*target;
 
 	target = pop_tail(&(edge->tail_a));
+	if (target == NULL)
+	{
+		printf("a가 비었어요");
+		return ;
+	}
 	append_head(&(edge->head_a), &(edge->head_a), target);
 }
 
