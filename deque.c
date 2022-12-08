@@ -6,17 +6,17 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:19:03 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/08 17:21:30 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/08 21:40:03 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_list	*lstnew(int num)
+t_deque	*lstnew(int num)
 {
-	t_list	*link;
+	t_deque	*link;
 
-	link = (t_list *)malloc(1 * sizeof(t_list));
+	link = (t_deque *)malloc(1 * sizeof(t_deque));
 	if (link == NULL)
 		return (NULL);
 	link->num = num;
@@ -25,9 +25,9 @@ t_list	*lstnew(int num)
 	return (link);
 }
 
-t_list	*pop_head(t_list **head)
+t_deque	*pop_head(t_deque **head)
 {
-	t_list	*pop;
+	t_deque	*pop;
 
 	pop = *head;
 	if (pop == NULL)
@@ -46,9 +46,9 @@ t_list	*pop_head(t_list **head)
 	return (pop);
 }
 
-t_list	*pop_tail(t_list **tail)
+t_deque	*pop_tail(t_deque **tail)
 {
-	t_list	*pop;
+	t_deque	*pop;
 
 	pop = *tail;
 	if (pop == NULL)
@@ -67,7 +67,7 @@ t_list	*pop_tail(t_list **tail)
 	return (pop);
 }
 
-void	append_head(t_list **head, t_list **tail, t_list *new)
+void	append_head(t_deque **head, t_deque **tail, t_deque *new)
 {
 	if (*head == NULL)
 	{
@@ -83,7 +83,7 @@ void	append_head(t_list **head, t_list **tail, t_list *new)
 	}
 }
 
-void	append_tail(t_list **head, t_list **tail, t_list *new)
+void	append_tail(t_deque **head, t_deque **tail, t_deque *new)
 {
 	if (*tail == NULL)
 	{
@@ -99,7 +99,7 @@ void	append_tail(t_list **head, t_list **tail, t_list *new)
 	}
 }
 
-void	sa(t_list_edge *edge)
+void	sa(t_deque_edge *edge)
 {
 	int	temp;
 
@@ -110,7 +110,7 @@ void	sa(t_list_edge *edge)
 	edge->head_a->num = temp;
 }
 
-void	sb(t_list_edge *edge)
+void	sb(t_deque_edge *edge)
 {
 	int	temp;
 
@@ -121,15 +121,15 @@ void	sb(t_list_edge *edge)
 	edge->head_b->num = temp;
 }
 
-void	ss(t_list_edge *edge)
+void	ss(t_deque_edge *edge)
 {
 	sa(edge);
 	sb(edge);
 }
 
-void	pa(t_list_edge *edge)
+void	pb(t_deque_edge *edge)
 {
-	t_list	*target;
+	t_deque	*target;
 
 	if (edge->head_a == NULL)
 		return ;
@@ -141,9 +141,9 @@ void	pa(t_list_edge *edge)
 	append_head(&(edge->head_b), &(edge->tail_b), target);
 }
 
-void	pb(t_list_edge *edge)
+void	pa(t_deque_edge *edge)
 {
-	t_list	*target;
+	t_deque	*target;
 
 	if (edge->head_b == NULL)
 		return ;
@@ -155,9 +155,9 @@ void	pb(t_list_edge *edge)
 	append_head(&(edge->head_a), &(edge->tail_a), target);
 }
 
-void	ra(t_list_edge *edge)
+void	ra(t_deque_edge *edge)
 {
-	t_list	*target;
+	t_deque	*target;
 
 	if (edge->head_a == edge->tail_a)
 		return ;
@@ -165,9 +165,9 @@ void	ra(t_list_edge *edge)
 	append_tail(&(edge->head_a), &(edge->tail_a), target);
 }
 
-void	rb(t_list_edge *edge)
+void	rb(t_deque_edge *edge)
 {
-	t_list	*target;
+	t_deque	*target;
 
 	if (edge->head_b == edge->tail_b)
 		return ;
@@ -175,15 +175,15 @@ void	rb(t_list_edge *edge)
 	append_tail(&(edge->head_b), &(edge->tail_b), target);
 }
 
-void	rr(t_list_edge *edge)
+void	rr(t_deque_edge *edge)
 {
 	ra(edge);
 	rb(edge);
 }
 
-void	rra(t_list_edge *edge)
+void	rra(t_deque_edge *edge)
 {
-	t_list	*target;
+	t_deque	*target;
 
 	if (edge->head_a == edge->tail_a)
 		return ;
@@ -191,9 +191,9 @@ void	rra(t_list_edge *edge)
 	append_head(&(edge->head_a), &(edge->head_a), target);
 }
 
-void	rrb(t_list_edge *edge)
+void	rrb(t_deque_edge *edge)
 {
-	t_list	*target;
+	t_deque	*target;
 
 	if (edge->head_b == edge->tail_b)
 		return ;
@@ -201,16 +201,16 @@ void	rrb(t_list_edge *edge)
 	append_head(&(edge->head_b), &(edge->head_b), target);
 }
 
-void	rrr(t_list_edge *edge)
+void	rrr(t_deque_edge *edge)
 {
 	rra(edge);
 	rrb(edge);
 }
 
-void	print_list(t_list_edge *edge)
+void	print_deque(t_deque_edge *edge)
 {
-	t_list	*temp_a;
-	t_list	*temp_b;
+	t_deque	*temp_a;
+	t_deque	*temp_b;
 
 	int i;
 	printf("============A============\t||\t============B============\n");
@@ -269,9 +269,9 @@ void	print_list(t_list_edge *edge)
 		printf("head_a: %p\n", edge->head_b);
 }
 
-void	print_list_b(t_list_edge *edge)
+void	print_deque_b(t_deque_edge *edge)
 {
-	t_list	*temp;
+	t_deque	*temp;
 	int i;
 	
 	printf("============B===========\n");
@@ -299,10 +299,10 @@ void	print_list_b(t_list_edge *edge)
 }
 
 
-void    arr_to_deque(t_data data, t_list_edge *edge)
+void    arr_to_deque(t_data data, t_deque_edge *edge)
 {
 	int 	i;
-	t_list	*new;
+	t_deque	*new;
 
 	i = -1;
 	while (++i < data.num)
@@ -311,12 +311,12 @@ void    arr_to_deque(t_data data, t_list_edge *edge)
 		append_tail(&(edge->head_a), &(edge->tail_a), new);
 		edge->head_a->index = i;
 	}
-	//print_list_a(edge);
-	//print_list_b(edge);
+	//print_deque_a(edge);
+	//print_deque_b(edge);
 	//pb(edge);
 	//pb(edge);
 	//pb(edge);
 	//sb(edge);
-	//print_list_a(edge);
-	//print_list_b(edge);
+	//print_deque_a(edge);
+	//print_deque_b(edge);
 }

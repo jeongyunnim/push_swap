@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/08 18:05:49 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/08 21:58:03 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	count_arg(char *data)
 			flag = 1;
 		data++;
 	}
-	if (*data == '\0' && flag == 1)
+	if (*data == '\0' && flag == 1) 
 		cnt++;
 	return (cnt);
 }
@@ -64,27 +64,34 @@ int	split_arg(char **data)
 	return (num);
 }
 
-t_data parse_data(char *data)
+int parse_data(t_data *data, char *str)
 {
-	t_data data_set;
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
-	data_set.num = count_arg(data);
-	data_set.arr = (int *)malloc(data_set.num * sizeof(int));
-	if (data_set.arr == NULL)
-		return (data_set);
-	while (data && *data != '\0' && i < data_set.num)
+	data->num = count_arg(str);
+	//printf("data->num: %d\n", data->num);
+	data->arr = (int *)malloc(data->num * sizeof(int));
+	if (data->arr == NULL)
+		return (ERROR);
+	temp = data->arr_data;
+	while (str && *str != '\0' && i < data->num)
 	{
-		(data_set.arr)[i++] = split_arg(&data);
+		(data->arr)[i] = split_arg(&data->arr_data);
+		//printf("arr[%d]: %d\n", i, (data->arr)[i]);
+		usleep(3000);
+		i++;
 	}
-	return (data_set);
+	free(temp);
+	data->arr_data = NULL;
+	return (0);
 }
 
-void	free_all(t_data *data, t_list_edge *edge)
+void	free_all(t_data *data, t_deque_edge *edge)
 {
-	t_list	*temp;
-	
+	t_deque	*temp;
+
 	if (data->arr != NULL)
 		free(data->arr);
 	data->arr = NULL;
@@ -112,7 +119,7 @@ void	swap(int *x, int *y)
 	*y = temp;
 }
 
-void	sort_in_deque_a(t_list_edge *edge, int pa_index)
+void	sort_in_deque_a(t_deque_edge *edge, int pa_index)
 {
 	int	i;
 
@@ -124,9 +131,9 @@ void	sort_in_deque_a(t_list_edge *edge, int pa_index)
 	}
 }
 
-int	define_pivot_a(t_list_edge *edge, t_data data, int range)
+int	define_pivot_a(t_deque_edge *edge, t_data data, int range)
 {
-	t_list	*temp;
+	t_deque	*temp;
 	int		i;
 	int		max;
 	int		pivot;
@@ -153,9 +160,9 @@ int	define_pivot_a(t_list_edge *edge, t_data data, int range)
 	return (pivot);
 }
 
-int	define_pivot_b(t_list_edge *edge, t_data data, int range)
+int	define_pivot_b(t_deque_edge *edge, t_data data, int range)
 {
-	t_list	*temp;
+	t_deque	*temp;
 	int		i;
 	int		max;
 	int		pivot;
@@ -163,7 +170,7 @@ int	define_pivot_b(t_list_edge *edge, t_data data, int range)
 	i = 0;
 	temp = edge->head_b;
 	max = temp->num;
-	if (temp != NULL && i < range)
+	while (temp != NULL && i < range)
 	{
 		if (temp->num > max)
 		{
@@ -182,9 +189,9 @@ int	define_pivot_b(t_list_edge *edge, t_data data, int range)
 	return (pivot);
 }
 
-void	B_to_A(t_list_edge *edge, t_data data, int range)
+void	B_to_A(t_deque_edge *edge, t_data data, int range)
 {
-	t_list	*temp;
+	t_deque	*temp;
 	int		rb_index;
 	int		pb_index;
 	int		pivot;
@@ -199,13 +206,20 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 	}
 	if (range == 1)
 	{
-		pb(edge);
+		printf("pa\n");
+		pa(edge);
 		return ;
 	}
 	else if (range == 2)
 	{
 		if (edge->head_b->num < edge->head_b->next->num)
+		{
+			printf("sb\npa\npa\n");
 			sb(edge);
+			pa(edge);
+			pa(edge);
+			return ;
+		}
 	}
 	pivot = define_pivot_b(edge, data, range);
 	//printf("BtoA pivot: %d\n", pivot);
@@ -215,33 +229,33 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 		{
 			rb_index++;
 			temp = temp->next;
-			//printf("===Do rb===\n");
+			printf("rb\n");
 			rb(edge);
-			//print_list(edge);
+			//print_deque(edge);
 		}
 		else
 		{
 			pb_index++;
 			temp = temp->next;
-			//printf("===Do pb===\n");
-			pb(edge);
-			//print_list(edge);
+			printf("pa\n");
+			pa(edge);
+			//print_deque(edge);
 		}
 	}
 	i = -1;
 	while (++i < rb_index)
 	{
-		//printf("===Do rrb===\n");
+		printf("rrb\n");
 		rrb(edge);
-		//print_list(edge);
+		//print_deque(edge);
 	}
 	A_to_B(edge, data, pb_index);
 	B_to_A(edge, data, rb_index);
 }
 
-void	A_to_B(t_list_edge *edge, t_data data, int range)
+void	A_to_B(t_deque_edge *edge, t_data data, int range)
 {
-	t_list	*temp;
+	t_deque	*temp;
 	int		ra_index;
 	int		pa_index;
 	int		pivot;
@@ -257,7 +271,10 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 	else if (range == 2)
 	{
 		if (edge->head_a->num > edge->head_a->next->num)
+		{
+			printf("sa\n");
 			sa(edge);
+		}
 		return ;
 	}
 	pivot = define_pivot_a(edge, data, range);
@@ -268,26 +285,26 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 		{
 			ra_index++;
 			temp = temp->next;
-			//printf("ra\n");
+			printf("ra\n");
 			ra(edge);
-			//print_list(edge);
+			//print_deque(edge);
 		}
 		else
 		{
 			pa_index++;
 			temp = temp->next;
-			//printf("pa\n");
-			pa(edge);
-			//print_list(edge);
+			printf("pb\n");
+			pb(edge);
+			//print_deque(edge);
 		}
 	}
 	i = -1;
 	while (++i < ra_index)
 	{
-		//printf("rra\n");
+		printf("rra\n");
 		//printf("range:%d ra_index:%d\n", range, ra_index);
 		rra(edge);
-		//print_list(edge);
+		//print_deque(edge);
 
 	}
 	A_to_B(edge, data, ra_index);
@@ -337,15 +354,27 @@ void	quick_sort(int *arr, int length)
 
 int	main(int argc, char **argv)
 {
-	t_list_edge edge;
+	t_deque_edge edge;
 	t_data		data;
+	char		*temp;
 	int 		i;
 
-	if (argc < 2)
+	if (argc < 1)
 		return (write(2, "ARGUMENT COUNT ERROR\n", 21));
-	i = 0;
+	data.arr_data = (char *)ft_calloc(1, sizeof(char));
+	i = 1;
 	while (argv[i] != NULL)
-		data = parse_data(argv[i++]);
+	{
+		temp = data.arr_data;
+		data.arr_data = ft_strjoin(data.arr_data, ft_strjoin(argv[i], " "));
+		free(temp);
+		//printf("%s\n", data.arr_data);
+		i++;
+	}
+	if (parse_data(&data, data.arr_data) == -1)
+		return (write(2, "PARSING ERROR\n", 14));
+	//printf("%s\n", data.arr_data);
+
 	if (data.arr == NULL)
 		return (write(2, "ALLOCATE ERROR\n", 15));
 	//i = -1;
@@ -362,9 +391,9 @@ int	main(int argc, char **argv)
 	//{
 	//	printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	//}
-	print_list(&edge);
+	//print_deque(&edge);
 	A_to_B(&edge, data, data.num);
-	print_list(&edge);
+	//print_deque(&edge);
 	free_all(&data, &edge);
 	return (0);
 }
