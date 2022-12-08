@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/07 20:39:44 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/08 17:20:07 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,13 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 	temp = edge->head_b;
 	rb_index = 0;
 	pb_index = 0;
-	if (range <= 1)
+	if (range == 0)
 	{
+		return ;
+	}
+	if (range == 1)
+	{
+		pb(edge);
 		return ;
 	}
 	else if (range == 2)
@@ -203,25 +208,33 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 			sb(edge);
 	}
 	pivot = define_pivot_b(edge, data, range);
+	printf("BtoA pivot: %d\n", pivot);
 	while (rb_index + pb_index < range)
 	{
-		if (temp->num > pivot)
+		if (temp->num < pivot)
 		{
 			rb_index++;
 			temp = temp->next;
+			printf("===Do rb===\n");
 			rb(edge);
+			print_list(edge);
 		}
 		else
 		{
 			pb_index++;
 			temp = temp->next;
+			printf("===Do pb===\n");
 			pb(edge);
+			print_list(edge);
 		}
 	}
 	i = -1;
 	while (++i < rb_index)
 	{
+		printf("===Do rrb===\n");
 		rrb(edge);
+		print_list(edge);
+
 	}
 	A_to_B(edge, data, pb_index);
 	B_to_A(edge, data, rb_index);
@@ -244,30 +257,39 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 	}
 	else if (range == 2)
 	{
-		if (edge->head_a->num < edge->head_a->next->num)
+		if (edge->head_a->num > edge->head_a->next->num)
 			sa(edge);
 		return ;
 	}
 	pivot = define_pivot_a(edge, data, range);
-	while (ra_index + pa_index < range)
+	printf("AtoB pivot: %d\n", pivot);
+ 	while (ra_index + pa_index < range)
 	{
 		if (temp->num > pivot)
 		{
 			ra_index++;
 			temp = temp->next;
+			printf("===Do ra===\n");
 			ra(edge);
+			print_list(edge);
 		}
 		else
 		{
 			pa_index++;
 			temp = temp->next;
+			printf("===Do pa===\n");
 			pa(edge);
+			print_list(edge);
 		}
 	}
 	i = -1;
 	while (++i < ra_index)
 	{
+		printf("===Do rra===\n");
+		printf("range:%d ra_index:%d\n", range, ra_index);
 		rra(edge);
+		print_list(edge);
+
 	}
 	A_to_B(edge, data, ra_index);
 	B_to_A(edge, data, pa_index);
@@ -336,17 +358,15 @@ int	main(int argc, char **argv)
 		printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	}
 	quick_sort(data.arr, data.num);
-	i = 0;
+	i = -1;
 	while (++i < data.num)
 	{
 		printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	}
     arr_to_deque(data, &edge);
-	print_list_a(&edge);
-	print_list_b(&edge);
+	print_list(&edge);
 	A_to_B(&edge, data, data.num);
-	print_list_a(&edge);
-	print_list_b(&edge);
+	print_list(&edge);
 	free_all(&data, &edge);
 	return (0);
 }

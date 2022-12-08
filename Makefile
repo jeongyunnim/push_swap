@@ -11,7 +11,7 @@ RM		=	rm -f
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $(NAME)
 
 $(OBJ)	:	$(SRC) $(INC)
 	$(CC) $(CFLAGS)	-c $^ -I $(INC)
