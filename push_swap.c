@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/08 17:20:07 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/08 18:00:53 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,26 +215,25 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 		{
 			rb_index++;
 			temp = temp->next;
-			printf("===Do rb===\n");
+			//printf("===Do rb===\n");
 			rb(edge);
-			print_list(edge);
+			//print_list(edge);
 		}
 		else
 		{
 			pb_index++;
 			temp = temp->next;
-			printf("===Do pb===\n");
+			//printf("===Do pb===\n");
 			pb(edge);
-			print_list(edge);
+			//print_list(edge);
 		}
 	}
 	i = -1;
 	while (++i < rb_index)
 	{
-		printf("===Do rrb===\n");
+		//printf("===Do rrb===\n");
 		rrb(edge);
-		print_list(edge);
-
+		//print_list(edge);
 	}
 	A_to_B(edge, data, pb_index);
 	B_to_A(edge, data, rb_index);
@@ -269,26 +268,26 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 		{
 			ra_index++;
 			temp = temp->next;
-			printf("===Do ra===\n");
+			//printf("ra\n");
 			ra(edge);
-			print_list(edge);
+			//print_list(edge);
 		}
 		else
 		{
 			pa_index++;
 			temp = temp->next;
-			printf("===Do pa===\n");
+			//printf("pa\n");
 			pa(edge);
-			print_list(edge);
+			//print_list(edge);
 		}
 	}
 	i = -1;
 	while (++i < ra_index)
 	{
-		printf("===Do rra===\n");
-		printf("range:%d ra_index:%d\n", range, ra_index);
+		//printf("rra\n");
+		//printf("range:%d ra_index:%d\n", range, ra_index);
 		rra(edge);
-		print_list(edge);
+		//print_list(edge);
 
 	}
 	A_to_B(edge, data, ra_index);
@@ -323,9 +322,6 @@ void	quick_sort_recursive(int *arr, int L, int R)
 	int	i;
 
 	i = L;
-	while (i < R)
-		printf("%d ", arr[i++]);
-	printf("\n");
 	if (L < R)
 	{
 		pivot = partition(arr, L, R);
@@ -347,26 +343,28 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (write(2, "ARGUMENT COUNT ERROR\n", 21));
-	data = parse_data(argv[1]);
+	i = 0;
+	while (argv[i] != NULL)
+		data = parse_data(argv[i++]);
 	if (data.arr == NULL)
 		return (write(2, "ALLOCATE ERROR\n", 15));
-	i = -1;
+	//i = -1;
 	memset(&edge, 0, sizeof(edge));
-	printf("data.num: %d\n", data.num);
-	while (++i < data.num)
-	{
-		printf("arr[%d]: %d\n", i, (data.arr)[i]);
-	}
+	//printf("data.num: %d\n", data.num);
+	//while (++i < data.num)
+	//{
+	//	printf("arr[%d]: %d\n", i, (data.arr)[i]);
+	//}
 	quick_sort(data.arr, data.num);
-	i = -1;
-	while (++i < data.num)
-	{
-		printf("arr[%d]: %d\n", i, (data.arr)[i]);
-	}
+	//i = -1;
+	//while (++i < data.num)
+	//{
+	//	printf("arr[%d]: %d\n", i, (data.arr)[i]);
+	//}
     arr_to_deque(data, &edge);
-	print_list(&edge);
+	//print_list(&edge);
 	A_to_B(&edge, data, data.num);
-	print_list(&edge);
+	//print_list(&edge);
 	free_all(&data, &edge);
 	return (0);
 }
