@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/08 18:00:53 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/08 18:05:49 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ void	B_to_A(t_list_edge *edge, t_data data, int range)
 			sb(edge);
 	}
 	pivot = define_pivot_b(edge, data, range);
-	printf("BtoA pivot: %d\n", pivot);
+	//printf("BtoA pivot: %d\n", pivot);
 	while (rb_index + pb_index < range)
 	{
 		if (temp->num < pivot)
@@ -261,7 +261,7 @@ void	A_to_B(t_list_edge *edge, t_data data, int range)
 		return ;
 	}
 	pivot = define_pivot_a(edge, data, range);
-	printf("AtoB pivot: %d\n", pivot);
+	//printf("AtoB pivot: %d\n", pivot);
  	while (ra_index + pa_index < range)
 	{
 		if (temp->num > pivot)
@@ -355,16 +355,16 @@ int	main(int argc, char **argv)
 	//{
 	//	printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	//}
+    arr_to_deque(data, &edge);
 	quick_sort(data.arr, data.num);
 	//i = -1;
 	//while (++i < data.num)
 	//{
 	//	printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	//}
-    arr_to_deque(data, &edge);
-	//print_list(&edge);
+	print_list(&edge);
 	A_to_B(&edge, data, data.num);
-	//print_list(&edge);
+	print_list(&edge);
 	free_all(&data, &edge);
 	return (0);
 }
