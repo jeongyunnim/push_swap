@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/08 20:09:25 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/10 18:02:00 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_deque
 	int				num;
 }	t_deque;
 
-typedef struct	s_deque_edge
+typedef struct s_deque_edge
 {
 	struct s_deque	*head_a;
 	struct s_deque	*tail_a;
@@ -37,7 +37,7 @@ typedef struct	s_deque_edge
 	struct s_deque	*tail_b;
 }	t_deque_edge;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	int		*arr;
 	char	*arr_data;
@@ -66,7 +66,7 @@ void	rrb(t_deque_edge *edge);
 void	rrr(t_deque_edge *edge);
 void	print_deque(t_deque_edge *edge);
 void	print_deque_b(t_deque_edge *edge);
-void    arr_to_deque(t_data data, t_deque_edge *edge);
+void	arr_to_deque(t_data data, t_deque_edge *edge);
 
 void	B_to_A(t_deque_edge *edge, t_data data, int range);
 void	A_to_B(t_deque_edge *edge, t_data data, int range);

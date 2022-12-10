@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/08 22:43:45 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/10 18:22:53 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,28 +282,31 @@ void	A_to_B(t_deque_edge *edge, t_data data, int range)
 		if (temp->num > pivot)
 		{
 			ra_index++;
-			temp = temp->next;
-			printf("ra\n");
-			ra(edge);
-			//print_deque(edge);
 		}
 		else
 		{
 			pa_index++;
-			temp = temp->next;
-			printf("pb\n");
-			pb(edge);
-			//print_deque(edge);
 		}
 	}
-	i = -1;
-	while (++i < ra_index)
+	i = 0;
+	while (i++ < ra_index)
+	{
+		temp = temp->next;
+		printf("ra\n");
+		ra(edge);
+	}
+	i = 0;
+	while (i++ < pa_index)
+	{
+		temp = temp->next;
+		printf("pb\n");
+		pb(edge);
+	}
+	i = 0;
+	while (i++ < ra_index)
 	{
 		printf("rra\n");
-		//printf("range:%d ra_index:%d\n", range, ra_index);
 		rra(edge);
-		//print_deque(edge);
-
 	}
 	A_to_B(edge, data, ra_index);
 	B_to_A(edge, data, pa_index);
@@ -345,7 +348,7 @@ void	quick_sort_recursive(int *arr, int L, int R)
 	}
 }
 
-void	quick_sort(int *arr, int length)
+void	quick_sort_arr(int *arr, int length)
 {
 	quick_sort_recursive(arr, 0, length - 1);
 }
@@ -372,7 +375,6 @@ int	main(int argc, char **argv)
 	if (parse_data(&data, data.arr_data) == -1)
 		return (write(2, "PARSING ERROR\n", 14));
 	//printf("%s\n", data.arr_data);
-
 	if (data.arr == NULL)
 		return (write(2, "ALLOCATE ERROR\n", 15));
 	//i = -1;
@@ -383,7 +385,7 @@ int	main(int argc, char **argv)
 	//	printf("arr[%d]: %d\n", i, (data.arr)[i]);
 	//}
     arr_to_deque(data, &edge);
-	quick_sort(data.arr, data.num);
+	quick_sort_arr(data.arr, data.num);
 	//i = -1;
 	//while (++i < data.num)
 	//{
