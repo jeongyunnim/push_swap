@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/10 18:22:53 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/14 18:11:08 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	sort_in_deque_a(t_deque_edge *edge, int pa_index)
 	}
 }
 
-int	define_pivot_a(t_deque_edge *edge, t_data data, int range)
+int	define_pivot_a(t_deque_edge *edge, t_data data, int range, int larg_p, int sml_p)
 {
 	t_deque	*temp;
 	int		i;
@@ -156,16 +156,16 @@ int	define_pivot_a(t_deque_edge *edge, t_data data, int range)
 		if (data.arr[i] == max)
 			break;
 	}
-	pivot = data.arr[i - (range / 2)];
+	larg_p = data.arr[i - (range / 3)];
+	sml_p = data.arr[i - ((range / 3) * 2)];
 	return (pivot);
 }
 
-int	define_pivot_b(t_deque_edge *edge, t_data data, int range)
+void	define_pivot_b(t_deque_edge *edge, t_data data, int range, int larg_p, int sml_p)
 {
 	t_deque	*temp;
 	int		i;
 	int		max;
-	int		pivot;
 
 	i = 0;
 	temp = edge->head_b;
@@ -185,8 +185,9 @@ int	define_pivot_b(t_deque_edge *edge, t_data data, int range)
 		if (data.arr[i] == max)
 			break;
 	}
-	pivot = data.arr[i - (range / 2)];
-	return (pivot);
+	larg_p = data.arr[i - (range / 3)];
+	sml_p = data.arr[i - ((range / 3) * 2)];
+	return ;
 }
 
 void	B_to_A(t_deque_edge *edge, t_data data, int range)
@@ -194,7 +195,8 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 	t_deque	*temp;
 	int		rb_index;
 	int		pb_index;
-	int		pivot;
+	int		pivot_l;
+	int		pivot_s;
 	int		i;
 
 	temp = edge->head_b;
@@ -221,10 +223,15 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 			return ;
 		}
 	}
-	pivot = define_pivot_b(edge, data, range);
+	else if (range == 3)
+	{
+		arrange_three(edge);
+		return ;
+	}
+	define_pivot_b(edge, data, range, pivot_l, pivot_s);
 	while (rb_index + pb_index < range)
 	{
-		if (temp->num < pivot)
+		if (temp->num < pivot_s)
 		{
 			rb_index++;
 			temp = temp->next;
@@ -257,7 +264,8 @@ void	A_to_B(t_deque_edge *edge, t_data data, int range)
 	t_deque	*temp;
 	int		ra_index;
 	int		pa_index;
-	int		pivot;
+	int		pivot_l;
+	int		pivot_s;
 	int		i;
 
 	temp = edge->head_a;
@@ -276,36 +284,35 @@ void	A_to_B(t_deque_edge *edge, t_data data, int range)
 		}
 		return ;
 	}
-	pivot = define_pivot_a(edge, data, range);
+	else if (range == 3)
+	{
+		arrange_three(edge);
+		return ;
+	}
+	define_pivot_a(edge, data, range, pivot_l, pivot_s);
  	while (ra_index + pa_index < range)
 	{
-		if (temp->num > pivot)
+		if (temp->num > pivot_l)
 		{
 			ra_index++;
+			ra(edge);
+		}
+		else if (temp->num < pivot_s)
+		{
+			pa_index++;
+			write(1, "pa\n", 3);
+			pa(edge);
 		}
 		else
 		{
-			pa_index++;
+			write(1, "pa\nrb\n", 6);
+			pa(edge);
+			rb(edge);
 		}
 	}
-	i = 0;
 	while (i++ < ra_index)
 	{
-		temp = temp->next;
-		printf("ra\n");
-		ra(edge);
-	}
-	i = 0;
-	while (i++ < pa_index)
-	{
-		temp = temp->next;
-		printf("pb\n");
-		pb(edge);
-	}
-	i = 0;
-	while (i++ < ra_index)
-	{
-		printf("rra\n");
+		write(1, "rra\n", 3);
 		rra(edge);
 	}
 	A_to_B(edge, data, ra_index);
