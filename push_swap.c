@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/14 22:30:55 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/15 16:12:03 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,28 @@ void	define_pivot_b(t_deque_edge *edge, t_data data, int range, int *larg_p, int
 	return ;
 }
 
+void	arrange_three(t_deque_edge *edge, char c)
+{
+	t_deque	*temp;
+	int		arr[3];
+	int		i;
+
+	if (c == 'a')
+	{
+		temp = edge->head_a;
+		i = 0;
+		while (i < 3)
+		{
+			arr[i++] = temp->num;
+			temp = temp->next;
+		}
+		if (arr[0] > arr[1] && arr[0] > arr[2])
+		{
+			
+		}
+	}
+}
+
 void	B_to_A(t_deque_edge *edge, t_data data, int range)
 {
 	t_deque	*temp;
@@ -210,7 +232,7 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 	}
 	if (range == 1)
 	{
-		printf("pa\n");
+		write(1, "pa\n", 3);
 		pa(edge);
 		return ;
 	}
@@ -218,12 +240,13 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 	{
 		if (edge->head_b->num < edge->head_b->next->num)
 		{
-			printf("sb\npa\npa\n");
+			write(1, "sb\n", 3);
 			sb(edge);
-			pa(edge);
-			pa(edge);
-			return ;
 		}
+		write(1, "pa\npa\n", 6);
+		pa(edge);
+		pa(edge);
+		return ;
 	}
 	//else if (range == 3)
 	//{
@@ -240,7 +263,7 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 			write(1, "pa\n", 3);
 			pa(edge);
 		}
-		else if (temp->num < pivot_s)
+		else if (temp->num <= pivot_s)
 		{
 			temp = temp->next;
 			small_index++;
@@ -256,7 +279,6 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 			ra(edge);
 		}
 	}
-	i = -1;
 	while (i < middle_index || i < small_index)
 	{
 		if (i < middle_index && i < small_index)
@@ -264,12 +286,12 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 			write(1, "rrr\n", 4);
 			rrr(edge);
 		}
-		else if (middle_index < i)
+		else if (i < middle_index)
 		{
 			write(1, "rra\n", 4);
 			rra(edge);
 		}
-		else if (small_index < i)
+		else if (i < small_index)
 		{
 			write(1, "rrb\n", 4);	
 			rrb(edge);
@@ -324,7 +346,7 @@ void	A_to_B(t_deque_edge *edge, t_data data, int range)
 			write(1, "ra\n", 3);
 			ra(edge);
 		}
-		else if (temp->num < pivot_s)
+		else if (temp->num <= pivot_s)
 		{
 			small_index++;
 			temp = temp->next;
@@ -360,7 +382,8 @@ void	A_to_B(t_deque_edge *edge, t_data data, int range)
 		i++;
 	}
 	A_to_B(edge, data, big_index);
-	B_to_A(edge, data, small_index + middle_index);
+	B_to_A(edge, data, middle_index);
+	B_to_A(edge, data, small_index);
 }
 
 int	partition(int *arr, int L, int R)
