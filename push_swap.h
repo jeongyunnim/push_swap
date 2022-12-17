@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/10 18:02:00 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/17 22:05:50 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,7 @@ void	arr_to_deque(t_data data, t_deque_edge *edge);
 
 void	B_to_A(t_deque_edge *edge, t_data data, int range);
 void	A_to_B(t_deque_edge *edge, t_data data, int range);
+void	define_pivot(t_deque *edge, t_data data, int range, int *larg_p, int *sml_p);
+void	arrange_three_a(t_deque_edge *edge);
 
 #endif
