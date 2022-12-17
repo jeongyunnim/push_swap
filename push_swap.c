@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/15 16:12:03 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/17 18:30:59 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,17 +119,17 @@ void	swap(int *x, int *y)
 	*y = temp;
 }
 
-void	sort_in_deque_a(t_deque_edge *edge, int small_index)
-{
-	int	i;
+//void	sort_in_deque_a(t_deque_edge *edge, int small_index)
+//{
+//	int	i;
 
-	i = 0;
-	rrb(edge);
-	while (i <= small_index)
-	{
-		pb(edge);
-	}
-}
+//	i = 0;
+//	rrb(edge);
+//	while (i <= small_index)
+//	{
+//		pb(edge);
+//	}
+//}
 
 void	define_pivot_a(t_deque_edge *edge, t_data data, int range, int *larg_p, int *sml_p)
 {
@@ -206,8 +206,16 @@ void	arrange_three(t_deque_edge *edge, char c)
 		}
 		if (arr[0] > arr[1] && arr[0] > arr[2])
 		{
-			
+			if (arr[1] > arr[2])
+			{
+
+			}
+			else
+			{
+				
+			}
 		}
+		
 	}
 }
 
@@ -279,6 +287,7 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 			ra(edge);
 		}
 	}
+	A_to_B(edge, data, big_index);
 	while (i < middle_index || i < small_index)
 	{
 		if (i < middle_index && i < small_index)
@@ -298,7 +307,7 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range)
 		}
 		i++;
 	}
-	A_to_B(edge, data, big_index);
+	//A_to_B(edge, data, big_index);
 	A_to_B(edge, data, middle_index);
 	B_to_A(edge, data, small_index);
 }
