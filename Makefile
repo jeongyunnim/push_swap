@@ -8,6 +8,7 @@ INC		=	./push_swap.h
 SRC		=	./push_swap.c\
 			./deque.c\
 			./quick_sort_deque.c\
+			./b_to_a.c\
 			./ft_calloc.c\
 			./ft_strjoin.c\
 

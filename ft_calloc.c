@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void	*ft_memset(void *bytes, int value, size_t len)
+void	*ft_memset(void *bytes, int value, size_t len)
 {
 	unsigned char	*temp;
 

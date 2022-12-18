@@ -37,6 +37,14 @@ typedef struct s_deque_edge
 	struct s_deque	*tail_b;
 }	t_deque_edge;
 
+typedef struct s_pivot_index
+{
+	int		big_index;
+	int		small_index;
+	int		middle_index;
+	int		pivot_l;
+	int		pivot_s;
+}	t_pivot_index;
 typedef struct s_data
 {
 	int		*arr;
@@ -47,6 +55,7 @@ typedef struct s_data
 void	*ft_calloc(size_t n, size_t size);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
+void	*ft_memset(void *bytes, int value, size_t len);
 
 t_deque	*lstnew(int num);
 t_deque	*pop_head(t_deque **head);

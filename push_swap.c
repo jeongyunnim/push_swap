@@ -183,7 +183,7 @@ int	main(int argc, char **argv)
 	if (data.arr == NULL)
 		return (write(2, "ALLOCATE ERROR\n", 15));
 	//데이터의 배열이 정렬되어있는 경우, 중복된 배열이 있을 경우 오류 메세지 표출 후 종료
-	memset(&edge, 0, sizeof(edge));
+	ft_memset(&edge, 0, sizeof(edge));
     arr_to_deque(data, &edge);
 	quick_sort_arr(data.arr, data.num);
 	A_to_B(&edge, data, data.num);
