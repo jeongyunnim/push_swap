@@ -12,7 +12,7 @@
 
 #include "./push_swap.h"
 
-void	define_pivot(t_deque *edge, t_data data, int range, int *larg_p, int *sml_p)
+void	define_pivot(t_deque *edge, t_data data, int range, int *big, int *sml)
 {
 	t_deque	*temp;
 	int		i;
@@ -36,8 +36,8 @@ void	define_pivot(t_deque *edge, t_data data, int range, int *larg_p, int *sml_p
 		if (data.arr[i] == max)
 			break;
 	}
-	*larg_p = data.arr[i - (range / 3)];
-	*sml_p = data.arr[i - ((range / 3) * 2)];
+	*big = data.arr[i - (range / 3)];
+	*sml = data.arr[i - ((range / 3) * 2)];
 	return ;
 }
 

@@ -116,7 +116,7 @@ void	swap(int *x, int *y)
 	*y = temp;
 }
 
-int	partition(int *arr, int L, int R)
+int	define_pivot_arr(int *arr, int L, int R)
 {
 	int pivot;
 	int	i;
@@ -141,12 +141,10 @@ int	partition(int *arr, int L, int R)
 void	quick_sort_recursive(int *arr, int L, int R)
 {
 	int	pivot;
-	int	i;
 
-	i = L;
 	if (L < R)
 	{
-		pivot = partition(arr, L, R);
+		pivot = define_pivot_arr(arr, L, R);
 		quick_sort_recursive(arr, L, pivot - 1);
 		quick_sort_recursive(arr, pivot + 1, R);
 	}
@@ -184,7 +182,7 @@ int	main(int argc, char **argv)
 		return (write(2, "PARSING ERROR\n", 14));
 	if (data.arr == NULL)
 		return (write(2, "ALLOCATE ERROR\n", 15));
-	//데이터의 배열이 정렬되어있는 경우 오류 메세지 표출 후 종료
+	//데이터의 배열이 정렬되어있는 경우, 중복된 배열이 있을 경우 오류 메세지 표출 후 종료
 	memset(&edge, 0, sizeof(edge));
     arr_to_deque(data, &edge);
 	quick_sort_arr(data.arr, data.num);

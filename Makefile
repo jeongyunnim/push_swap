@@ -18,7 +18,7 @@ RM		=	rm -f
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ 
+	$(CC) $(CFLAGS) $^ -o $@
 
 $(OBJ)	:	$(SRC) $(INC)
 	$(CC) $(CFLAGS) -c $^ -I $(INC) \
