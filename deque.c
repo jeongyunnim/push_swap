@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:19:03 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/08 21:40:03 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/21 17:37:56 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,13 +252,6 @@ void	print_deque(t_deque_edge *edge)
 		printf("\n");
 		i++;
 	}
-	//temp_a = edge->tail_a;
-	//i--;
-	//while (temp_a != NULL)
-	//{
-	//	printf("A[%d]: %d\n", i--, temp_a->num);
-	//	temp_a = temp_a->previous;
-	//}
 	if (edge->head_a != NULL)
 		printf("head_a: %d | tail_a: %d\n", edge->head_a->num, edge->tail_a->num);
 	else

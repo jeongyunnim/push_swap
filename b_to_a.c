@@ -69,7 +69,7 @@ void	arrange_three_b(t_deque_edge *edge)
 		}
 		else
 		{
-			write(1, "pa\npa\npa\n", 10);
+			write(1, "pa\npa\npa\n", 9);
 			pa(edge);
 			pa(edge);
 			pa(edge);
@@ -115,7 +115,7 @@ void	partition_b(t_deque_edge *edge, t_pivot_index *b, int range)
 			write(1, "pa\n", 3);
 			pa(edge);
 		}
-		else if (temp->num <= b->pivot_s)
+		else if (temp->num < b->pivot_s)
 		{
 			temp = temp->next;
 			b->small_index++;
