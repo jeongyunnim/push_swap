@@ -35,7 +35,7 @@ void	arrange_three_b(t_deque_edge *edge)
 			pa(edge);
 		}
 	}
-	else if(num[1] < num[0] && num[1] < num[2])
+	else if (num[1] < num[0] && num[1] < num[2])
 	{
 		if (num[0] < num[2])
 		{
@@ -49,10 +49,9 @@ void	arrange_three_b(t_deque_edge *edge)
 		}
 		else
 		{
-			write(1, "rb\npa\nrrb\npa\npa\n", 16);
-			rb(edge);
+			write(1, "pa\nsb\npa\npa\n", 12);
 			pa(edge);
-			rrb(edge);
+			sb(edge);
 			pa(edge);
 			pa(edge);
 		}
@@ -61,9 +60,9 @@ void	arrange_three_b(t_deque_edge *edge)
 	{
 		if (num[0] < num[1])
 		{
-			write(1, "pa\nsb\npa\npa\n", 12);
-			pa(edge);
+			write(1, "sb\npa\npa\npa\n", 12);
 			sb(edge);
+			pa(edge);
 			pa(edge);
 			pa(edge);
 		}

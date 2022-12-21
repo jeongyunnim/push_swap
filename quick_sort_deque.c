@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:42:38 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/21 17:58:07 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/21 21:16:10 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,11 @@ void	arrange_three_a(t_deque_edge *edge)
 	{
 		if (num[0] < num[1])
 		{
-			write(1, "sa\nra\nsa\nrra\n", 13);
-			sa(edge);
+			write(1, "ra\nsa\nrra\nsa\n", 13);
 			ra(edge);
 			sa(edge);
 			rra(edge);
+			sa(edge);
 		}
 		else
 		{
