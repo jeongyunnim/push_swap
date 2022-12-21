@@ -1,21 +1,8 @@
 #include "./push_swap.h"
 
-void	arrange_three_b(t_deque_edge *edge)
+void	first_is_small_b(t_deque_edge *edge, int num_1, int num_2)
 {
-	t_deque	*temp;
-	int		num[3];
-	int		i;
-
-	i = -1;
-	temp = edge->head_b;
-	while (++i < 3)
-	{
-		num[i] = temp->num;
-		temp = temp->next;
-	}
-	if (num[0] < num[1] && num[0] < num[2])
-	{
-		if (num[1] < num[2])
+		if (num_1 < num_2)
 		{
 			write(1, "rb\nsb\npa\npa\nrrb\npa\n", 19);
 			rb(edge);
@@ -34,10 +21,11 @@ void	arrange_three_b(t_deque_edge *edge)
 			rrb(edge);
 			pa(edge);
 		}
-	}
-	else if (num[1] < num[0] && num[1] < num[2])
-	{
-		if (num[0] < num[2])
+}
+
+void	second_is_small_b(t_deque_edge *edge, int num_0, int num_2)
+{
+		if (num_0 < num_2)
 		{
 			write(1, "rb\nsb\npa\nrrb\npa\npa\n", 19);
 			rb(edge);
@@ -55,10 +43,11 @@ void	arrange_three_b(t_deque_edge *edge)
 			pa(edge);
 			pa(edge);
 		}
-	}
-	else if (num[2] < num[0] && num[2] < num[1])
-	{
-		if (num[0] < num[1])
+}
+
+void	third_is_small_b(t_deque_edge *edge, int num_0, int num_1)
+{
+		if (num_0 < num_1)
 		{
 			write(1, "sb\npa\npa\npa\n", 12);
 			sb(edge);
@@ -73,6 +62,32 @@ void	arrange_three_b(t_deque_edge *edge)
 			pa(edge);
 			pa(edge);
 		}
+}
+
+void	arrange_three_b(t_deque_edge *edge)
+{
+	t_deque	*temp;
+	int		num[3];
+	int		i;
+
+	i = -1;
+	temp = edge->head_b;
+	while (++i < 3)
+	{
+		num[i] = temp->num;
+		temp = temp->next;
+	}
+	if (num[0] < num[1] && num[0] < num[2])
+	{
+		first_is_small_b(edge, num[1], num[2]);
+	}
+	else if (num[1] < num[0] && num[1] < num[2])
+	{
+		second_is_small_b(edge, num[0], num[2]);
+	}
+	else if (num[2] < num[0] && num[2] < num[1])
+	{
+		third_is_small_b(edge, num[0], num[1]);
 	}
 }
 
