@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/17 22:14:28 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/22 22:09:34 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,145 @@ void	quick_sort_recursive(int *arr, int L, int R)
 
 void	quick_sort_arr(int *arr, int length)
 {
-	quick_sort_recursive(arr, 0, length - 1);
+	quick_sort_recursive(arr, 0, length - 1); 
+}
+
+void	only_three_range(t_deque_edge *edge)
+{
+	t_deque	*temp;
+	int		num[3];
+	int		i;
+
+	i = -1;
+	temp = edge->head_a;
+	while (++i < 3)
+	{
+		num[i] = temp->num;
+		temp = temp->next;
+	}
+	if (num[0] < num[1] && num[0] < num[2])
+	{
+		if (num[1] > num[2])
+		{
+			write(1, "sa\nra\n", 6);
+			sa(edge);
+			ra(edge);
+		}
+	}
+	else if(num[1] < num[0] && num[1] < num[2])
+	{
+		if (num[0] < num[2])
+		{
+			write(1, "sa\n", 3);
+			sa(edge);
+		}
+		else
+		{
+			write(1, "ra\n", 3);
+			ra(edge);
+		}
+	}
+	else if (num[2] < num[0] && num[2] < num[1])
+	{
+		if (num[0] < num[1])
+		{
+			write(1, "rra\n", 4);
+			rra(edge);
+		}
+		else
+		{
+			write(1, "sa\nrra\n", 7);
+			sa(edge);
+			rra(edge);
+		}
+	}
+}
+
+void	send_to_b_min_arg(t_deque_edge *edge, int index_1, int index_2, int range)
+{
+	t_deque	*temp;
+	int		i;
+	int		times;
+
+	temp = edge->head_a;
+	i = 0;
+	times = range - 3;
+	while (i < range)
+	{
+		if (i == index_1 || i == index_2)
+		{
+			times--;
+			write(1, "pb\n", 3);
+			pb(edge);
+			if (times == 0)
+				return ;
+		}
+		else
+		{
+			write(1, "ra\n", 3);
+			ra(edge);
+		}
+		i++;
+	}
+}
+
+void	send_min_arg(t_deque_edge *edge, int num[5], t_data data)
+{
+	int	i;
+	int	min_1;
+	int	min_2;
+
+	i = 2;
+	min_1 = 0;
+	min_2 = 1;
+	while (i < data.num)
+	{
+		if (num[min_1] > num[i] || num[min_2] > num[i])
+		{
+			if (num[min_1] < num[min_2])
+				min_2 = i;
+			else
+				min_1 = i;
+		}
+		i++;
+	}
+	if (data.num == 4)
+	{
+		if (num[min_2] < num[min_1])
+			min_1 = min_2;
+		else
+			min_2 = min_1;
+	}
+	if (data.num >= 4)
+	{
+		send_to_b_min_arg(edge, min_1, min_2, data.num);
+		only_three_range(edge);
+		B_to_A(edge, data, data.num - 3);
+	}
+	else if (data.num == 3)
+		only_three_range(edge);
+	else
+		A_to_B(edge, data, data.num);
+}
+
+void	little_number_arrange(t_deque_edge *edge, t_data data)
+{
+	int	num[5];
+	int	i;
+
+	ft_memset(&num, 0, sizeof(num));
+	i = 0;
+	while (i < data.num)
+	{
+		num[i] = data.arr[i];
+		i++;
+	}
+	if (data.num >= 4)
+	{
+		send_min_arg(edge, num, data);
+	}
+	else if (data.num )
+		only_three_range(edge);
 }
 
 int	main(int argc, char **argv)
@@ -185,13 +323,16 @@ int	main(int argc, char **argv)
 	//데이터의 배열이 정렬되어있는 경우, 중복된 배열이 있을 경우 오류 메세지 표출 후 종료
 	ft_memset(&edge, 0, sizeof(edge));
     arr_to_deque(data, &edge);
-	quick_sort_arr(data.arr, data.num);
-	A_to_B(&edge, data, data.num);
+	if (data.num > 5)
+	{
+		quick_sort_arr(data.arr, data.num);
+		A_to_B(&edge, data, data.num);
+	}
+	else
+	{
+		little_number_arrange(&edge, data);
+	}
 	//print_deque(&edge);
 	free_all(&data, &edge);
 	return (0);
 }
-
-/*
-	a
-*/

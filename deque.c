@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:19:03 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/21 17:37:56 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/22 16:12:58 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,114 +99,6 @@ void	append_tail(t_deque **head, t_deque **tail, t_deque *new)
 	}
 }
 
-void	sa(t_deque_edge *edge)
-{
-	int	temp;
-
-	if (edge->head_a == NULL)
-		return ;
-	temp = edge->head_a->next->num;
-	edge->head_a->next->num = edge->head_a->num;
-	edge->head_a->num = temp;
-}
-
-void	sb(t_deque_edge *edge)
-{
-	int	temp;
-
-	if (edge->head_b == NULL)
-		return ;
-	temp = edge->head_b->next->num;
-	edge->head_b->next->num = edge->head_b->num;
-	edge->head_b->num = temp;
-}
-
-void	ss(t_deque_edge *edge)
-{
-	sa(edge);
-	sb(edge);
-}
-
-void	pb(t_deque_edge *edge)
-{
-	t_deque	*target;
-
-	if (edge->head_a == NULL)
-		return ;
-	target = pop_head(&(edge->head_a));
-	if (edge->head_a == NULL)
-	{
-		edge->tail_a = NULL;
-	}
-	append_head(&(edge->head_b), &(edge->tail_b), target);
-}
-
-void	pa(t_deque_edge *edge)
-{
-	t_deque	*target;
-
-	if (edge->head_b == NULL)
-		return ;
-	target = pop_head(&(edge->head_b));
-	if (edge->head_b == NULL)
-	{
-		edge->tail_b = NULL;
-	}
-	append_head(&(edge->head_a), &(edge->tail_a), target);
-}
-
-void	ra(t_deque_edge *edge)
-{
-	t_deque	*target;
-
-	if (edge->head_a == edge->tail_a)
-		return ;
-	target = pop_head(&(edge->head_a));
-	append_tail(&(edge->head_a), &(edge->tail_a), target);
-}
-
-void	rb(t_deque_edge *edge)
-{
-	t_deque	*target;
-
-	if (edge->head_b == edge->tail_b)
-		return ;
-	target = pop_head(&(edge->head_b));
-	append_tail(&(edge->head_b), &(edge->tail_b), target);
-}
-
-void	rr(t_deque_edge *edge)
-{
-	ra(edge);
-	rb(edge);
-}
-
-void	rra(t_deque_edge *edge)
-{
-	t_deque	*target;
-
-	if (edge->head_a == edge->tail_a)
-		return ;
-	target = pop_tail(&(edge->tail_a));
-	append_head(&(edge->head_a), &(edge->head_a), target);
-}
-
-void	rrb(t_deque_edge *edge)
-{
-	t_deque	*target;
-
-	if (edge->head_b == edge->tail_b)
-		return ;
-	target = pop_tail(&(edge->tail_b));
-	append_head(&(edge->head_b), &(edge->head_b), target);
-}
-
-void	rrr(t_deque_edge *edge)
-{
-	rra(edge);
-	rrb(edge);
-}
-
 void	print_deque(t_deque_edge *edge)
 {
 	t_deque	*temp_a;
@@ -262,36 +154,6 @@ void	print_deque(t_deque_edge *edge)
 		printf("head_a: %p\n", edge->head_b);
 }
 
-void	print_deque_b(t_deque_edge *edge)
-{
-	t_deque	*temp;
-	int i;
-	
-	printf("============B===========\n");
-	i = 0;
-	temp = edge->head_b;
-	if (temp == NULL)
-	{
-		printf("EMPTY\n");
-		return ;
-	}
-	while (temp != NULL)
-	{ 
-		printf("B[%d]: %d\n", i++, temp->num);
-		temp = temp->next;
-	}
-	temp = edge->tail_b;
-	printf("========================\n");
-	i--;
-	while (temp != NULL)
-	{
-		printf("B[%d]: %d\n", i--, temp->num);
-		temp = temp->previous;
-	}
-	printf("head_b: %d | tail_b: %d\n", edge->head_b->num, edge->tail_b->num);
-}
-
-
 void    arr_to_deque(t_data data, t_deque_edge *edge)
 {
 	int 	i;
@@ -304,12 +166,4 @@ void    arr_to_deque(t_data data, t_deque_edge *edge)
 		append_tail(&(edge->head_a), &(edge->tail_a), new);
 		edge->head_a->index = i;
 	}
-	//print_deque_a(edge);
-	//print_deque_b(edge);
-	//pb(edge);
-	//pb(edge);
-	//pb(edge);
-	//sb(edge);
-	//print_deque_a(edge);
-	//print_deque_b(edge);
 }
