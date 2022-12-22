@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/22 22:09:34 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/22 22:26:37 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@ int	count_arg(char *data)
 int	split_arg(char **data)
 {
 	int	num;
+	int	sign;
 
 	num = 0;
+	sign = 1;
 	while (**data != '\0' && ft_isspace(**data) == 0)
 		(*data)++;
 	while (*data != NULL && **data != '\0')
 	{
+		if (**data == '-')
+			sign *= -1;
 		if ('0' <= **data && **data <= '9')
 		{
 			num *= 10;
@@ -61,7 +65,7 @@ int	split_arg(char **data)
 			break ;
 		(*data)++;
 	}
-	return (num);
+	return (num * sign);
 }
 
 int parse_data(t_data *data, char *str)
@@ -152,7 +156,7 @@ void	quick_sort_recursive(int *arr, int L, int R)
 
 void	quick_sort_arr(int *arr, int length)
 {
-	quick_sort_recursive(arr, 0, length - 1); 
+	quick_sort_recursive(arr, 0, length - 1);
 }
 
 void	only_three_range(t_deque_edge *edge)
@@ -322,6 +326,7 @@ int	main(int argc, char **argv)
 		return (write(2, "ALLOCATE ERROR\n", 15));
 	//데이터의 배열이 정렬되어있는 경우, 중복된 배열이 있을 경우 오류 메세지 표출 후 종료
 	ft_memset(&edge, 0, sizeof(edge));
+	printf("arr[0]: %d\n", data.arr[0]);
     arr_to_deque(data, &edge);
 	if (data.num > 5)
 	{
