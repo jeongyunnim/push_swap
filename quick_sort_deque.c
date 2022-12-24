@@ -90,7 +90,6 @@ void	third_is_small_a(t_deque_edge *edge, int num_0, int num_1)
 	}
 }
 
-
 void	arrange_three_a(t_deque_edge *edge)
 {
 	t_deque	*temp;
@@ -172,6 +171,8 @@ void	send_min_to_b(t_deque_edge *edge, int num[5], int range)
 	}
 
 }
+
+// 여기 수정 해야 함
 
 void	arrange_five_a(t_deque_edge *edge, int range)
 {
