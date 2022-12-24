@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/22 22:26:37 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/24 18:13:15 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	count_arg(char *data)
 
 int	split_arg(char **data)
 {
-	int	num;
-	int	sign;
+	long long	num;
+	int			sign;
 
 	num = 0;
 	sign = 1;
@@ -56,14 +56,26 @@ int	split_arg(char **data)
 	{
 		if (**data == '-')
 			sign *= -1;
-		if ('0' <= **data && **data <= '9')
+		else if ('0' <= **data && **data <= '9')
 		{
 			num *= 10;
 			num += **data - '0';
 		}
-		else if (num != 0)
+		else if (ft_isspace(**data) == 0)
+		{
 			break ;
+		}
+		else
+		{
+			write(2, "INVALID ARGUMENT\n", 17);
+			exit(EXIT_FAILURE);
+		}
 		(*data)++;
+	}
+	if (num * sign < -2147483648 || num * sign > 2147483647)
+	{
+		write(2, "INVALID ARGUMENT\n", 17);
+		exit(EXIT_FAILURE);
 	}
 	return (num * sign);
 }
@@ -210,7 +222,7 @@ void	only_three_range(t_deque_edge *edge)
 	}
 }
 
-void	send_to_b_min_arg(t_deque_edge *edge, int index_1, int index_2, int range)
+void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range)
 {
 	t_deque	*temp;
 	int		i;
@@ -238,20 +250,18 @@ void	send_to_b_min_arg(t_deque_edge *edge, int index_1, int index_2, int range)
 	}
 }
 
-void	send_min_arg(t_deque_edge *edge, int num[5], t_data data)
+void	find_2_min_arg(t_data data, int num[5], int *min_1, int *min_2)
 {
 	int	i;
-	int	min_1;
-	int	min_2;
 
 	i = 2;
-	min_1 = 0;
-	min_2 = 1;
+	*min_1 = 0;
+	*min_2 = 1;
 	while (i < data.num)
 	{
-		if (num[min_1] > num[i] || num[min_2] > num[i])
+		if (num[*min_1] > num[i] || num[*min_2] > num[i])
 		{
-			if (num[min_1] < num[min_2])
+			if (num[*min_1] < num[*min_2])
 				min_2 = i;
 			else
 				min_1 = i;
@@ -260,14 +270,13 @@ void	send_min_arg(t_deque_edge *edge, int num[5], t_data data)
 	}
 	if (data.num == 4)
 	{
-		if (num[min_2] < num[min_1])
+		if (num[*min_2] < num[*min_1])
 			min_1 = min_2;
 		else
 			min_2 = min_1;
 	}
 	if (data.num >= 4)
 	{
-		send_to_b_min_arg(edge, min_1, min_2, data.num);
 		only_three_range(edge);
 		B_to_A(edge, data, data.num - 3);
 	}
@@ -280,6 +289,8 @@ void	send_min_arg(t_deque_edge *edge, int num[5], t_data data)
 void	little_number_arrange(t_deque_edge *edge, t_data data)
 {
 	int	num[5];
+	int min_1;
+	int	min_2;
 	int	i;
 
 	ft_memset(&num, 0, sizeof(num));
@@ -291,11 +302,16 @@ void	little_number_arrange(t_deque_edge *edge, t_data data)
 	}
 	if (data.num >= 4)
 	{
-		send_min_arg(edge, num, data);
+		find_2_min_arg(edge, &min_1, &min_2);
+		send_min_arg_to_b(edge, min_1, min_2, data.num);
 	}
-	else if (data.num )
+	else if (data.num >= 3)
 		only_three_range(edge);
+	else
+		A_to_B(edge, data, data.num);
 }
+
+//여기 수정해야 함.
 
 int	main(int argc, char **argv)
 {
@@ -326,7 +342,6 @@ int	main(int argc, char **argv)
 		return (write(2, "ALLOCATE ERROR\n", 15));
 	//데이터의 배열이 정렬되어있는 경우, 중복된 배열이 있을 경우 오류 메세지 표출 후 종료
 	ft_memset(&edge, 0, sizeof(edge));
-	printf("arr[0]: %d\n", data.arr[0]);
     arr_to_deque(data, &edge);
 	if (data.num > 5)
 	{
