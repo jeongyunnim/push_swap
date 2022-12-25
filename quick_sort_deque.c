@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:42:38 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/24 17:56:36 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/25 17:47:30 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,69 +117,12 @@ void	arrange_three_a(t_deque_edge *edge)
 	}
 }
 
-//void	fourth_to_bottom(t_deque_edge *edge, int four_location)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (i < 3)
-//	{
-//		if (four_location <= i)
-//		{
-//			write(1, "sa\n", 3);
-//			sa(edge);
-//		}
-//		write(1, "ra\n", 3);
-//		ra(edge);
-//		i++;
-//	}
-//	i = 0;
-//	while (i < 3)
-//	{
-//		write(1, "rra\n", 4);
-//		rra(edge);
-//		i++;
-//	}
-//}
-
-void	send_min_to_b(t_deque_edge *edge, int num[5], int range)
-{
-	int	i;
-	int	min_1;
-	int	min_2;
-
-	i = 2;
-	min_1 = 0;
-	min_2 = 1;
-	while (i < range)
-	{
-		if (num[min_1] > num[i] || num[min_2] > num[i])
-		{
-			if (num[min_1] < num[min_2])
-				min_2 = i;
-			else
-				min_1 = i;
-		}
-		i++;
-	}
-	if (range == 4)
-	{
-		if (num[min_2] < num[min_1])
-			min_1 = min_2;
-		else
-			min_2 = min_1;
-	}
-
-}
-
-// 여기 수정 해야 함
-
 void	arrange_five_a(t_deque_edge *edge, int range)
 {
 	t_deque	*temp;
 	int		num[5];
-	int min_1;
-	int	min_2;
+	int		min_1;
+	int		min_2;
 	int		i;
 
 	i = -1;
@@ -190,8 +133,8 @@ void	arrange_five_a(t_deque_edge *edge, int range)
 		num[i] = temp->num;
 		temp = temp->next;
 	}
-	find_2_min_arg(num[5], &min_1, &min_2);
-	send_min_to_b(edge, num, range);
+	find_2_min_arg(num, &min_1, &min_2, range);
+	send_min_arg_to_b(edge, min_1, min_2, range);
 	if (range == 5)
 	{
 		arrange_three_a(edge);
@@ -218,7 +161,7 @@ void	less_than_five_a(t_deque_edge *edge, int range)
 	}
 	else if (range >= 4)
 	{
-		arrange_five_a(edge);
+		arrange_five_a(edge, 4);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/24 18:13:15 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/25 17:58:35 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,12 +171,17 @@ void	quick_sort_arr(int *arr, int length)
 	quick_sort_recursive(arr, 0, length - 1);
 }
 
-void	only_three_range(t_deque_edge *edge)
+void	only_three_range(t_deque_edge *edge, int range)
 {
 	t_deque	*temp;
 	int		num[3];
 	int		i;
 
+	if (range < 3)
+	{
+		less_than_five_a(edge, range);
+		return ;
+	}
 	i = -1;
 	temp = edge->head_a;
 	while (++i < 3)
@@ -246,32 +251,31 @@ void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range)
 		}
 		i++;
 	}
+	while (ra_index != 0)
+	{
+		write(1, "rra\n", 4);
+		rra(edge);
+		ra_index--;
+	}
 }
 
-void	find_2_min_arg(int num[5], int *min_1, int *min_2)
+void	find_2_min_arg(int num[5], int *min_1, int *min_2, int range)
 {
 	int	i;
 
 	i = 2;
 	*min_1 = 0;
 	*min_2 = 1;
-	while (i < data.num)
+	while (i < range)
 	{
 		if (num[*min_1] > num[i] || num[*min_2] > num[i])
 		{
 			if (num[*min_1] < num[*min_2])
-				min_2 = i;
+				*min_2 = i;
 			else
-				min_1 = i;
+				*min_1 = i;
 		}
 		i++;
-	}
-	if (data.num == 4)
-	{
-		if (num[*min_2] < num[*min_1])
-			min_1 = min_2;
-		else
-			min_2 = min_1;
 	}
 }
 
@@ -289,19 +293,15 @@ void	little_number_arrange(t_deque_edge *edge, t_data data)
 		num[i] = data.arr[i];
 		i++;
 	}
-	if (data.num >= 5)
+	if (data.num >= 4)
 	{
-		find_2_min_arg(num, &min_1, &min_2);
+		find_2_min_arg(num, &min_1, &min_2, data.num);
 		send_min_arg_to_b(edge, min_1, min_2, data.num);
-		less_than_five_a(edge, data.num);
+		data.num -= 2;
+		B_to_A(edge, data, 2);
 	}
-	else if (data.num >= 3)
-		only_three_range(edge);
-	else
-		less_than_five_a(edge, data.num);
+	only_three_range(edge, data.num);
 }
-
-//여기 수정해야 함.
 
 int	main(int argc, char **argv)
 {
@@ -342,7 +342,7 @@ int	main(int argc, char **argv)
 	{
 		little_number_arrange(&edge, data);
 	}
-	//print_deque(&edge);
+	print_deque(&edge);
 	free_all(&data, &edge);
 	return (0);
 }

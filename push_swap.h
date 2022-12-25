@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/22 20:40:43 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/25 17:43:26 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_deque
 {
 	struct s_deque	*previous;
 	struct s_deque	*next;
-	int				index;
 	int				num;
 }	t_deque;
 
@@ -76,6 +75,12 @@ void	rrr(t_deque_edge *edge);
 void	print_deque(t_deque_edge *edge);
 void	print_deque_b(t_deque_edge *edge);
 void	arr_to_deque(t_data data, t_deque_edge *edge);
+
+void	arrange_five_a(t_deque_edge *edge, int range);
+void	less_than_five_a(t_deque_edge *edge, int range);
+void	arrange_three_a(t_deque_edge *edge);
+void	find_2_min_arg(int num[5], int *min_1, int *min_2, int range);
+void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range);
 
 void	B_to_A(t_deque_edge *edge, t_data data, int range);
 void	A_to_B(t_deque_edge *edge, t_data data, int range);
