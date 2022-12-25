@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/25 17:43:26 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/25 21:41:40 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ void	arrange_five_a(t_deque_edge *edge, int range);
 void	less_than_five_a(t_deque_edge *edge, int range);
 void	arrange_three_a(t_deque_edge *edge);
 void	find_2_min_arg(int num[5], int *min_1, int *min_2, int range);
+void	find_2_max_arg(int num[5], int *max_1, int *max_2, int range);
 void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range);
+void	less_than_five_b(t_deque_edge *edge, int range);
 
 void	B_to_A(t_deque_edge *edge, t_data data, int range);
 void	A_to_B(t_deque_edge *edge, t_data data, int range);

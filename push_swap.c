@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/25 17:58:35 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/25 21:41:51 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range)
 	temp = edge->head_a;
 	i = 0;
 	ra_index = 0;
-	while (i < range)
+	while (i < range && (i <= index_1 || i <= index_2))
 	{
 		if (i == index_1 || i == index_2)
 		{
@@ -251,11 +251,31 @@ void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range)
 		}
 		i++;
 	}
-	while (ra_index != 0)
+	while (ra_index != 0 && edge->head_a->next->next != edge->tail_a)
 	{
 		write(1, "rra\n", 4);
 		rra(edge);
 		ra_index--;
+	}
+}
+
+void	find_2_max_arg(int num[5], int *max_1, int *max_2, int range)
+{
+	int	i;
+
+	i = 2;
+	*max_1 = 0;
+	*max_2 = 1;
+	while (i < range)
+	{
+		if (num[*max_1] < num[i] || num[*max_2] < num[i])
+		{
+			if (num[*max_1] > num[*max_2])
+				*max_2 = i;
+			else
+				*max_1 = i;
+		}
+		i++;
 	}
 }
 
@@ -297,10 +317,11 @@ void	little_number_arrange(t_deque_edge *edge, t_data data)
 	{
 		find_2_min_arg(num, &min_1, &min_2, data.num);
 		send_min_arg_to_b(edge, min_1, min_2, data.num);
-		data.num -= 2;
-		B_to_A(edge, data, 2);
+		only_three_range(edge, data.num - 2);
+		less_than_five_b(edge, 2);
 	}
-	only_three_range(edge, data.num);
+	else
+		only_three_range(edge, data.num);
 }
 
 int	main(int argc, char **argv)
@@ -342,7 +363,7 @@ int	main(int argc, char **argv)
 	{
 		little_number_arrange(&edge, data);
 	}
-	print_deque(&edge);
+	//print_deque(&edge);
 	free_all(&data, &edge);
 	return (0);
 }

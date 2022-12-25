@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:42:38 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/25 17:47:30 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/25 21:42:03 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void	arrange_five_a(t_deque_edge *edge, int range)
 	{
 		less_than_five_a(edge, range - 2);
 	}
+	less_than_five_b(edge, 2);
 }
 
 void	less_than_five_a(t_deque_edge *edge, int range)
@@ -190,9 +191,13 @@ void	partition_a(t_deque_edge *edge, t_pivot_index *a, int range)
 		{
 			a->middle_index++;
 			temp = temp->next;
-			write(1, "pb\nrb\n", 6);
+			write(1, "pb\n", 3);
 			pb(edge);
-			rb(edge);
+			if (edge->head_b->next != NULL)
+			{
+				write(1, "rb\n", 3);
+				rb(edge);
+			}
 		}
 	}
 }
