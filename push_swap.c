@@ -6,19 +6,28 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/25 21:41:51 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/25 22:26:30 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-int	ft_isspace(char	c)
+int	ft_isspace(char c)
 {
 	if ((9 < c && c < 13) || c == ' ')
 		return (0);
 	else
 		return (-1);
 }
+
+int	ft_isnum(char c)
+{
+	if ('0' <= c && c <= '9')
+		return (0);
+	else
+		return (-1);
+}
+
 
 int	count_arg(char *data)
 {
@@ -324,6 +333,51 @@ void	little_number_arrange(t_deque_edge *edge, t_data data)
 		only_three_range(edge, data.num);
 }
 
+int	argument_check(char *arg)
+{
+	int	flag;
+
+	flag = 0;
+	while (*arg != '\0')
+	{
+		if (ft_isspace(*arg) != 0 && ft_isnum(*arg) != 0)
+		{
+			return (ERROR);
+		}
+		if ('0' <= *arg && *arg <= '9')
+		{
+			flag = 1;
+		}
+		arg++;
+	}
+	if (flag == 0)
+		return (ERROR);
+	else
+		return (0);
+}
+
+int	arranged_check_arr(t_data data)
+{
+	int	target;
+	int	flag;
+	int	i;
+
+	i = 0;
+	flag = 1;
+	while (i < data.num - 1)
+	{
+		target = *(data.arr);
+		(data.arr)++;
+		if (target > *(data.arr))
+			flag = 0;
+		i++;
+	}
+	if (flag == 1)
+		return (ERROR);
+	else
+		return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_deque_edge edge;
@@ -338,25 +392,28 @@ int	main(int argc, char **argv)
 	while (argv[i] != NULL)
 	{
 		temp = data.arr_data;
-		//if (argument_check_function() == ERROR)
-		//{
-		//	write(2, "ARGUMENT ERROR\n", );
-		//	return (ERROR);
-		//}
+		if (argument_check(argv[i]) == ERROR)
+		{
+			return (write(2, "ARGUMENT ERROR\n", 15));
+		}
 		data.arr_data = ft_strjoin(data.arr_data, ft_strjoin(argv[i], " "));
 		free(temp);
 		i++;
 	}
 	if (parse_data(&data, data.arr_data) == -1)
+	{
+		free_all(&data, &edge); // 다른 부분 오류 났을 때도 프리해주고 오류 출력하게 하기.
 		return (write(2, "PARSING ERROR\n", 14));
+	}
 	if (data.arr == NULL)
 		return (write(2, "ALLOCATE ERROR\n", 15));
-	//데이터의 배열이 정렬되어있는 경우, 중복된 배열이 있을 경우 오류 메세지 표출 후 종료
+	if (arranged_check_arr(data) == ERROR)
+		return (write(2, "DATA ARRANGED ALREADY\n", 22));
 	ft_memset(&edge, 0, sizeof(edge));
     arr_to_deque(data, &edge);
 	if (data.num > 5)
 	{
-		quick_sort_arr(data.arr, data.num);
+		quick_sort_arr(data.arr, data.num); // 정렬 한 다음에 같은 게 있는지 찾아보자.
 		A_to_B(&edge, data, data.num);
 	}
 	else
