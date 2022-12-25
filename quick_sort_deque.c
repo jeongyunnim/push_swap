@@ -178,6 +178,8 @@ void	arrange_five_a(t_deque_edge *edge, int range)
 {
 	t_deque	*temp;
 	int		num[5];
+	int min_1;
+	int	min_2;
 	int		i;
 
 	i = -1;
@@ -188,6 +190,7 @@ void	arrange_five_a(t_deque_edge *edge, int range)
 		num[i] = temp->num;
 		temp = temp->next;
 	}
+	find_2_min_arg(num[5], &min_1, &min_2);
 	send_min_to_b(edge, num, range);
 	if (range == 5)
 	{

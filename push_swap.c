@@ -226,23 +226,21 @@ void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range)
 {
 	t_deque	*temp;
 	int		i;
-	int		times;
+	int		ra_index;
 
 	temp = edge->head_a;
 	i = 0;
-	times = range - 3;
+	ra_index = 0;
 	while (i < range)
 	{
 		if (i == index_1 || i == index_2)
 		{
-			times--;
 			write(1, "pb\n", 3);
 			pb(edge);
-			if (times == 0)
-				return ;
 		}
 		else
 		{
+			ra_index++;
 			write(1, "ra\n", 3);
 			ra(edge);
 		}
@@ -250,7 +248,7 @@ void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range)
 	}
 }
 
-void	find_2_min_arg(t_data data, int num[5], int *min_1, int *min_2)
+void	find_2_min_arg(int num[5], int *min_1, int *min_2)
 {
 	int	i;
 
@@ -275,15 +273,6 @@ void	find_2_min_arg(t_data data, int num[5], int *min_1, int *min_2)
 		else
 			min_2 = min_1;
 	}
-	if (data.num >= 4)
-	{
-		only_three_range(edge);
-		B_to_A(edge, data, data.num - 3);
-	}
-	else if (data.num == 3)
-		only_three_range(edge);
-	else
-		A_to_B(edge, data, data.num);
 }
 
 void	little_number_arrange(t_deque_edge *edge, t_data data)
@@ -300,15 +289,16 @@ void	little_number_arrange(t_deque_edge *edge, t_data data)
 		num[i] = data.arr[i];
 		i++;
 	}
-	if (data.num >= 4)
+	if (data.num >= 5)
 	{
-		find_2_min_arg(edge, &min_1, &min_2);
+		find_2_min_arg(num, &min_1, &min_2);
 		send_min_arg_to_b(edge, min_1, min_2, data.num);
+		less_than_five_a(edge, data.num);
 	}
 	else if (data.num >= 3)
 		only_three_range(edge);
 	else
-		A_to_B(edge, data, data.num);
+		less_than_five_a(edge, data.num);
 }
 
 //여기 수정해야 함.
