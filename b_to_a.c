@@ -93,11 +93,9 @@ void	arrange_three_b(t_deque_edge *edge)
 
 void	send_min_arg_to_a(t_deque_edge *edge, int index_1, int index_2, int range)
 {
-	t_deque	*temp;
 	int		i;
 	int		ra_index;
 
-	temp = edge->head_a;
 	i = 0;
 	ra_index = 0;
 	while (i < range && (i <= index_1 || i <= index_2))
@@ -125,11 +123,9 @@ void	send_min_arg_to_a(t_deque_edge *edge, int index_1, int index_2, int range)
 
 void	send_max_arg_to_a(t_deque_edge *edge, int index_1, int index_2, int range)
 {
-	t_deque	*temp;
 	int		i;
 	int		rb_index;
 
-	temp = edge->head_a;
 	i = 0;
 	rb_index = 0;
 	while (i < range && (i <= index_1 || i <= index_2))

@@ -162,7 +162,7 @@ void	less_than_five_a(t_deque_edge *edge, int range)
 	}
 	else if (range >= 4)
 	{
-		arrange_five_a(edge, 4);
+		arrange_five_a(edge, 5);
 	}
 }
 
@@ -234,10 +234,7 @@ void	A_to_B(t_deque_edge *edge, t_data data, int range)
 
 	ft_memset(&a, 0, sizeof(a));
 	if (range <= 4)
-	{
-		less_than_five_a(edge, range);
-		return ;
-	}
+		return (less_than_five_a(edge, range));
 	define_pivot(edge->head_a, data, range, &a.pivot_l, &a.pivot_s);
 	partition_a(edge, &a, range);
 	reverse_partition_a(edge, &a);

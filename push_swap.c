@@ -28,7 +28,6 @@ int	ft_isnum(char c)
 		return (-1);
 }
 
-
 int	count_arg(char *data)
 {
 	int	cnt;
@@ -61,7 +60,7 @@ int	split_arg(char **data)
 	sign = 1;
 	while (**data != '\0' && ft_isspace(**data) == 0)
 		(*data)++;
-	while (*data != NULL && **data != '\0')
+	while (*data != NULL && **data != '\0' && ft_isspace(**data) != 0)
 	{
 		if (**data == '-')
 			sign *= -1;
@@ -70,20 +69,16 @@ int	split_arg(char **data)
 			num *= 10;
 			num += **data - '0';
 		}
-		else if (ft_isspace(**data) == 0)
-		{
-			break ;
-		}
 		else
 		{
-			write(2, "INVALID ARGUMENT\n", 17);
+			write(2, "ERROR\nINVALID ARGUMENT\n", 23);
 			exit(EXIT_FAILURE);
 		}
 		(*data)++;
 	}
 	if (num * sign < -2147483648 || num * sign > 2147483647)
 	{
-		write(2, "INVALID ARGUMENT\n", 17);
+		write(2, "ERROR\nOCCURRED INT OVERFLOW\n", 28);
 		exit(EXIT_FAILURE);
 	}
 	return (num * sign);
@@ -238,11 +233,9 @@ void	only_three_range(t_deque_edge *edge, int range)
 
 void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range)
 {
-	t_deque	*temp;
 	int		i;
 	int		ra_index;
 
-	temp = edge->head_a;
 	i = 0;
 	ra_index = 0;
 	while (i < range && (i <= index_1 || i <= index_2))
@@ -378,49 +371,22 @@ int	arranged_check_arr(t_data data)
 		return (0);
 }
 
-int	main(int argc, char **argv)
+int	overlap_check(t_data data)
 {
-	t_deque_edge edge;
-	t_data		data;
-	char		*temp;
-	int 		i;
+	int	temp;
+	int	i;
 
-	if (argc < 1)
-		return (write(2, "ARGUMENT COUNT ERROR\n", 21));
-	data.arr_data = (char *)ft_calloc(1, sizeof(char));
-	i = 1;
-	while (argv[i] != NULL)
+	i = 0;
+	while (i < data.num - 1)
 	{
-		temp = data.arr_data;
-		if (argument_check(argv[i]) == ERROR)
+		temp = data.arr[i];
+		if (temp == data.arr[i + 1])
 		{
-			return (write(2, "ARGUMENT ERROR\n", 15));
+			return (ERROR);
 		}
-		data.arr_data = ft_strjoin(data.arr_data, ft_strjoin(argv[i], " "));
-		free(temp);
 		i++;
 	}
-	if (parse_data(&data, data.arr_data) == -1)
-	{
-		free_all(&data, &edge); // 다른 부분 오류 났을 때도 프리해주고 오류 출력하게 하기.
-		return (write(2, "PARSING ERROR\n", 14));
-	}
-	if (data.arr == NULL)
-		return (write(2, "ALLOCATE ERROR\n", 15));
-	if (arranged_check_arr(data) == ERROR)
-		return (write(2, "DATA ARRANGED ALREADY\n", 22));
-	ft_memset(&edge, 0, sizeof(edge));
-    arr_to_deque(data, &edge);
-	if (data.num > 5)
-	{
-		quick_sort_arr(data.arr, data.num); // 정렬 한 다음에 같은 게 있는지 찾아보자.
-		A_to_B(&edge, data, data.num);
-	}
-	else
-	{
-		little_number_arrange(&edge, data);
-	}
-	//print_deque(&edge);
-	free_all(&data, &edge);
 	return (0);
 }
+
+

@@ -27,6 +27,7 @@ SRC		=	./push_swap.c\
 			./reverse_reverse.c\
 			./ft_calloc.c\
 			./ft_strjoin.c\
+			./main.c\
 
 
 OBJ		=	$(SRC:%.c=%.o)
