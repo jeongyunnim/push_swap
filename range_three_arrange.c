@@ -6,13 +6,13 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 14:02:27 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 15:00:49 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 15:58:36 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-void	first_is_small_a(t_deque_edge *edge, int num_1, int num_2)
+static void	first_is_small_a(t_deque_edge *edge, int num_1, int num_2)
 {
 		if (num_1 > num_2)
 		{
@@ -23,7 +23,7 @@ void	first_is_small_a(t_deque_edge *edge, int num_1, int num_2)
 		}
 }
 
-void	second_is_small_a(t_deque_edge *edge, int num_0, int num_2)
+static void	second_is_small_a(t_deque_edge *edge, int num_0, int num_2)
 {
 		if (num_0 < num_2)
 		{
@@ -40,7 +40,7 @@ void	second_is_small_a(t_deque_edge *edge, int num_0, int num_2)
 		}
 }
 
-void	third_is_small_a(t_deque_edge *edge, int num_0, int num_1)
+static void	third_is_small_a(t_deque_edge *edge, int num_0, int num_1)
 {
 	if (num_0 < num_1)
 	{

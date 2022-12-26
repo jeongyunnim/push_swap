@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 14:56:01 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 18:18:45 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,12 @@ void	rra(t_deque_edge *edge);
 void	rrb(t_deque_edge *edge);
 void	rrr(t_deque_edge *edge);
 
+void	error_check(t_deque_edge *edge, t_data *data);
 int		argument_check(char *arg);
 int		overlap_check(t_data data);
 int		arranged_check_arr(t_data data);
+void	print_error_exit(t_deque_edge *edge, t_data *data);
+
 
 void	print_deque(t_deque_edge *edge);
 

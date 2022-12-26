@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:53:50 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 15:24:50 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 18:21:57 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	main(int argc, char **argv)
 {
-	t_deque_edge edge;
-	t_data		data;
-	char		*temp;
-	int 		i;
+	t_deque_edge	edge;
+	t_data			data;
+	char			*temp;
+	int 			i;
 
 	if (argc < 1)
 		return (write(2, "ARGUMENT COUNT ERROR\n", 21));
@@ -27,22 +27,12 @@ int	main(int argc, char **argv)
 	{
 		temp = data.arr_data;
 		if (argument_check(argv[i]) == ERROR)
-		{
-			return (write(2, "ARGUMENT ERROR\n", 15));
-		}
+			print_error_exit(&edge, &data);
 		data.arr_data = ft_strjoin(data.arr_data, ft_strjoin(argv[i], " "));
 		free(temp);
 		i++;
 	}
-	if (parse_data(&data, data.arr_data) == -1)
-	{
-		free_all(&data, &edge); // 다른 부분 오류 났을 때도 프리해주고 오류 출력하게 하기.
-		return (write(2, "PARSING ERROR\n", 14));
-	}
-	if (data.arr == NULL)
-		return (write(2, "ALLOCATE ERROR\n", 15));
-	if (arranged_check_arr(data) == ERROR)
-		return (write(2, "DATA ARRANGED ALREADY\n", 22));
+	error_check(&edge, &data);
 	ft_memset(&edge, 0, sizeof(edge));
     arr_to_deque(data, &edge);
 	quick_sort_arr(data.arr, data.num); // 정렬 한 다음에 같은 게 있는지 찾아보자.
@@ -56,7 +46,6 @@ int	main(int argc, char **argv)
 	{
 		little_number_arrange(&edge, data);
 	}
-	//print_deque(&edge);
 	free_all(&data, &edge);
 	return (0);
 }

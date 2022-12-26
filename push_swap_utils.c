@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 14:53:32 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 18:26:53 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ void	free_all(t_data *data, t_deque_edge *edge)
 		free(data->arr);
 	data->arr = NULL;
 	temp = edge->head_a;
-	while (temp != NULL)
+	while (edge->head_a != NULL)
 	{
 		temp = pop_head(&(edge->head_a));
 		free(temp);
 	}
-	while (temp != NULL)
+	temp = edge->head_b;
+	while (edge->head_b != NULL)
 	{
 		temp = pop_head(&(edge->head_b));
 		free(temp);

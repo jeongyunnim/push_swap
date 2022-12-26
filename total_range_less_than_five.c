@@ -6,11 +6,50 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:55:45 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 15:19:20 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 15:57:09 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
+
+static void	first_is_small_a(t_deque_edge *edge, int num_1, int num_2)
+{
+		if (num_1 > num_2)
+		{
+			write(1, "sa\nra\n", 6);
+			sa(edge);
+			ra(edge);
+		}
+}
+
+static void	second_is_small_a(t_deque_edge *edge, int num_0, int num_2)
+{
+		if (num_0 < num_2)
+		{
+			write(1, "sa\n", 3);
+			sa(edge);
+		}
+		else
+		{
+			write(1, "ra\n", 3);
+			ra(edge);
+		}
+}
+
+static void	third_is_small_a(t_deque_edge *edge, int num_0, int num_1)
+{
+		if (num_0 < num_1)
+		{
+			write(1, "rra\n", 4);
+			rra(edge);
+		}
+		else
+		{
+			write(1, "sa\nrra\n", 7);
+			sa(edge);
+			rra(edge);
+		}
+}
 
 void	only_three_range(t_deque_edge *edge, int range)
 {
@@ -32,39 +71,15 @@ void	only_three_range(t_deque_edge *edge, int range)
 	}
 	if (num[0] < num[1] && num[0] < num[2])
 	{
-		if (num[1] > num[2])
-		{
-			write(1, "sa\nra\n", 6);
-			sa(edge);
-			ra(edge);
-		}
+		first_is_small_a(edge, num[1], num[2]);
 	}
 	else if(num[1] < num[0] && num[1] < num[2])
 	{
-		if (num[0] < num[2])
-		{
-			write(1, "sa\n", 3);
-			sa(edge);
-		}
-		else
-		{
-			write(1, "ra\n", 3);
-			ra(edge);
-		}
+		second_is_small_a(edge, num[0], num[2]);
 	}
 	else if (num[2] < num[0] && num[2] < num[1])
 	{
-		if (num[0] < num[1])
-		{
-			write(1, "rra\n", 4);
-			rra(edge);
-		}
-		else
-		{
-			write(1, "sa\nrra\n", 7);
-			sa(edge);
-			rra(edge);
-		}
+		third_is_small_a(edge, num[0], num[1]);
 	}
 }
 

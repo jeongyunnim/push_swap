@@ -6,7 +6,7 @@
 #    By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 16:10:17 by jeseo             #+#    #+#              #
-#    Updated: 2022/12/26 15:00:22 by jeseo            ###   ########.fr        #
+#    Updated: 2022/12/26 16:41:19 by jeseo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ SRC		=	./main.c\
 			./reverse.c\
 			./reverse_reverse.c\
 
-
 OBJ		=	$(SRC:%.c=%.o)
 RM		=	rm -f
 
@@ -44,7 +43,7 @@ $(NAME)	:	$(OBJ)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(OBJ)	:	$(SRC) $(INC)
-	$(CC) $(CFLAGS) -c $^ -I $(INC) \
+	$(CC) $(CFLAGS) -c $^
 
 clean	:
 	$(RM) $(OBJ)
