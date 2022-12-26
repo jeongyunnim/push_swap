@@ -6,14 +6,14 @@
 #    By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 16:10:17 by jeseo             #+#    #+#              #
-#    Updated: 2022/12/26 16:41:19 by jeseo            ###   ########.fr        #
+#    Updated: 2022/12/26 21:51:01 by jeseo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	./push_swap
 
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror
 
 INC		=	./push_swap.h
 
@@ -26,8 +26,10 @@ SRC		=	./main.c\
 			./deque_utils.c\
 			./argument_to_array.c\
 			./argument_error.c\
+			./a_to_b.c\
 			./b_to_a.c\
-			./range_three_arrange.c\
+			./range_three_arrange_a.c\
+			./range_three_arrange_b.c\
 			./total_range_less_than_five.c\
 			./push.c\
 			./swap.c\
@@ -40,7 +42,7 @@ RM		=	rm -f
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $(NAME)
 
 $(OBJ)	:	$(SRC) $(INC)
 	$(CC) $(CFLAGS) -c $^

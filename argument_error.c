@@ -6,27 +6,42 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:58:56 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 18:16:38 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 20:37:56 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_error_exit(t_deque_edge *edge, t_data *data)
+void	free_then_exit(t_deque_edge *edge, t_data *data)
 {
 	free_all(data, edge);
 	exit(EXIT_FAILURE);
 }
 
-void	error_check(t_deque_edge *edge, t_data *data)
+void	parsing_argument(t_deque_edge *edge, t_data *data)
 {
 	if (parse_data(data, data->arr_data) == -1)
+	{
 		write(2, "ALLOCATE ERROR\n", 15);
+		free_then_exit(edge, data);
+	}
 	if (data->arr == NULL)
+	{
 		write(2, "ALLOCATE ERROR\n", 15);
+		free_then_exit(edge, data);
+	}
 	if (arranged_check_arr(*data) == ERROR)
+	{
 		write(2, "DATA ARRANGED ALREADY\n", 22);
-	print_error_exit(edge, data);
+		free_then_exit(edge, data);
+	}
+	arr_to_deque(*data, edge);
+	quick_sort_arr(data);
+	if (overlap_check(*data) == ERROR)
+	{
+		write(2, "ARGUMENT OVERLAPPED\n", 20);
+		free_then_exit(edge, data);
+	}
 }
 
 int	argument_check(char *arg)

@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 14:45:42 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 14:45:43 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 21:43:12 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	swap(int *x, int *y)
 
 int	define_pivot_arr(int *arr, int L, int R)
 {
-	int pivot;
+	int	pivot;
 	int	i;
 	int	j;
 
@@ -55,7 +55,7 @@ void	quick_sort_recursive(int *arr, int L, int R)
 	}
 }
 
-void	quick_sort_arr(int *arr, int length)
+void	quick_sort_arr(t_data *data)
 {
-	quick_sort_recursive(arr, 0, length - 1);
+	quick_sort_recursive(data->arr, 0, data->num - 1);
 }

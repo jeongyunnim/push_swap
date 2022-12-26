@@ -1,9 +1,5 @@
 {
 	"files.associations": {
-		"push_swap.h": "c",
-		"string.h": "c",
-		"stdlib.h": "c",
-		"ratio": "c",
-		"__functional_base": "c"
+		"algorithm": "c"
 	}
 }

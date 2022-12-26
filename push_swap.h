@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 18:18:45 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 21:55:03 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,36 +76,42 @@ void	rra(t_deque_edge *edge);
 void	rrb(t_deque_edge *edge);
 void	rrr(t_deque_edge *edge);
 
-void	error_check(t_deque_edge *edge, t_data *data);
+void	parsing_argument(t_deque_edge *edge, t_data *data);
 int		argument_check(char *arg);
 int		overlap_check(t_data data);
+void	free_then_exit(t_deque_edge *edge, t_data *data);
 int		arranged_check_arr(t_data data);
-void	print_error_exit(t_deque_edge *edge, t_data *data);
-
-
-void	print_deque(t_deque_edge *edge);
-
-int 	parse_data(t_data *data, char *str);
-void	quick_sort_arr(int *arr, int length);
-
-void	arr_to_deque(t_data data, t_deque_edge *edge);
-
-
-void	little_number_arrange(t_deque_edge *edge, t_data data);
 
 void	arrange_five_a(t_deque_edge *edge, int range);
 void	less_than_five_a(t_deque_edge *edge, int range);
+void	partition_a(t_deque_edge *edge, t_pivot_index *a, int range);
+void	reverse_partition_a(t_deque_edge *edge, t_pivot_index *a);
+void	a_to_b(t_deque_edge *edge, t_data data, int range);
+
+void	arrange_five_b(t_deque_edge *edge, int range);
+void	less_than_five_b(t_deque_edge *edge, int range);
+void	partition_b(t_deque_edge *edge, t_pivot_index *b, int range);
+void	reverse_partition_b(t_deque_edge *edge, t_pivot_index *b);
+void	b_to_a(t_deque_edge *edge, t_data data, int range);
+
 void	arrange_three_a(t_deque_edge *edge);
+void	arrange_three_b(t_deque_edge *edge);
+
+int		parse_data(t_data *data, char *str);
+void	quick_sort_arr(t_data *data);
+
+void	arr_to_deque(t_data data, t_deque_edge *edge);
+
+void	little_number_arrange(t_deque_edge *edge, t_data data);
+
 void	find_2_min_arg(int num[5], int *min_1, int *min_2, int range);
 void	find_2_max_arg(int num[5], int *max_1, int *max_2, int range);
-void	send_min_arg_to_b(t_deque_edge *edge, int index_1, int index_2, int range);
-void	less_than_five_b(t_deque_edge *edge, int range);
+void	send_min_arg_to_b(t_deque_edge *edge, int idx_1, int idx_2, int range);
+void	send_max_arg_to_a(t_deque_edge *edge, int idx_1, int idx_2, int range);
 
-void	B_to_A(t_deque_edge *edge, t_data data, int range);
-void	A_to_B(t_deque_edge *edge, t_data data, int range);
-void	define_pivot(t_deque *edge, t_data data, int range, int *larg_p, int *sml_p);
+void	b_to_a(t_deque_edge *edge, t_data data, int range);
+void	a_to_b(t_deque_edge *edge, t_data data, int range);
+void	define_pivot(t_deque *edge, t_data data, int range, t_pivot_index *x);
 void	arrange_three_a(t_deque_edge *edge);
-
-
 
 #endif

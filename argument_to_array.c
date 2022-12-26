@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:52:40 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 15:11:06 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 21:37:09 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_arg(char *data)
 
 	cnt = 0;
 	flag = 0;
-	while (data != NULL && *data !='\0')
+	while (data != NULL && *data != '\0')
 	{
 		if (flag == 1 && ft_isspace(*data) == 0)
 		{
@@ -30,12 +30,12 @@ int	count_arg(char *data)
 			flag = 1;
 		data++;
 	}
-	if (*data == '\0' && flag == 1) 
+	if (*data == '\0' && flag == 1)
 		cnt++;
 	return (cnt);
 }
 
-int	split_arg(char **data)
+long long	split_arg(char **data)
 {
 	long long	num;
 	int			sign;
@@ -44,14 +44,11 @@ int	split_arg(char **data)
 	sign = 1;
 	while (**data != '\0' && ft_isspace(**data) == 0)
 		(*data)++;
-	if (**data == '-')
-	{
+	if (**data == '-' && (*data)++)
 		sign *= -1;
-		(*data)++;
-	}
 	while (*data != NULL && **data != '\0' && ft_isspace(**data) != 0)
 	{
-		if ('0' <= **data && **data <= '9')
+		if (ft_isnum(**data) == 0)
 		{
 			num *= 10;
 			num += **data - '0';
@@ -63,18 +60,14 @@ int	split_arg(char **data)
 		}
 		(*data)++;
 	}
-	if (num * sign < -2147483648 || num * sign > 2147483647)
-	{
-		write(2, "ERROR\nOCCURRED INT OVERFLOW\n", 28);
-		exit(EXIT_FAILURE);
-	}
 	return (num * sign);
 }
 
-int parse_data(t_data *data, char *str)
+int	parse_data(t_data *data, char *str)
 {
-	int		i;
-	char	*temp;
+	int			i;
+	long long	num;
+	char		*temp;
 
 	i = 0;
 	data->num = count_arg(str);
@@ -84,7 +77,13 @@ int parse_data(t_data *data, char *str)
 	temp = data->arr_data;
 	while (str && *str != '\0' && i < data->num)
 	{
-		(data->arr)[i] = split_arg(&data->arr_data);
+		num = split_arg(&data->arr_data);
+		if (num < -2147483648 || num > 2147483647)
+		{
+			write(2, "ERROR\nINT OVERFLOW\n", 28);
+			return (ERROR);
+		}
+		(data->arr)[i] = num;
 		i++;
 	}
 	free(temp);
@@ -92,9 +91,9 @@ int parse_data(t_data *data, char *str)
 	return (0);
 }
 
-void    arr_to_deque(t_data data, t_deque_edge *edge)
+void	arr_to_deque(t_data data, t_deque_edge *edge)
 {
-	int 	i;
+	int		i;
 	t_deque	*new;
 
 	i = -1;

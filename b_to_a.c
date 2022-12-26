@@ -1,155 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_to_a.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/26 21:16:49 by jeseo             #+#    #+#             */
+/*   Updated: 2022/12/26 21:53:55 by jeseo            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./push_swap.h"
-
-void	first_is_small_b(t_deque_edge *edge, int num_1, int num_2)
-{
-		if (num_1 < num_2)
-		{
-			write(1, "rb\nsb\npa\npa\nrrb\npa\n", 19);
-			rb(edge);
-			sb(edge);
-			pa(edge);
-			pa(edge);
-			rrb(edge);
-			pa(edge);
-		}
-		else
-		{
-			write(1, "rb\npa\npa\nrrb\npa\n", 16);
-			rb(edge);
-			pa(edge);
-			pa(edge);
-			rrb(edge);
-			pa(edge);
-		}
-}
-
-void	second_is_small_b(t_deque_edge *edge, int num_0, int num_2)
-{
-		if (num_0 < num_2)
-		{
-			write(1, "rb\nsb\npa\nrrb\npa\npa\n", 19);
-			rb(edge);
-			sb(edge);
-			pa(edge);
-			rrb(edge);
-			pa(edge);
-			pa(edge);
-		}
-		else
-		{
-			write(1, "pa\nsb\npa\npa\n", 12);
-			pa(edge);
-			sb(edge);
-			pa(edge);
-			pa(edge);
-		}
-}
-
-void	third_is_small_b(t_deque_edge *edge, int num_0, int num_1)
-{
-		if (num_0 < num_1)
-		{
-			write(1, "sb\npa\npa\npa\n", 12);
-			sb(edge);
-			pa(edge);
-			pa(edge);
-			pa(edge);
-		}
-		else
-		{
-			write(1, "pa\npa\npa\n", 9);
-			pa(edge);
-			pa(edge);
-			pa(edge);
-		}
-}
-
-void	arrange_three_b(t_deque_edge *edge)
-{
-	t_deque	*temp;
-	int		num[3];
-	int		i;
-
-	i = -1;
-	temp = edge->head_b;
-	while (++i < 3)
-	{
-		num[i] = temp->num;
-		temp = temp->next;
-	}
-	if (num[0] < num[1] && num[0] < num[2])
-	{
-		first_is_small_b(edge, num[1], num[2]);
-	}
-	else if (num[1] < num[0] && num[1] < num[2])
-	{
-		second_is_small_b(edge, num[0], num[2]);
-	}
-	else if (num[2] < num[0] && num[2] < num[1])
-	{
-		third_is_small_b(edge, num[0], num[1]);
-	}
-}
-
-void	send_min_arg_to_a(t_deque_edge *edge, int index_1, int index_2, int range)
-{
-	int		i;
-	int		ra_index;
-
-	i = 0;
-	ra_index = 0;
-	while (i < range && (i <= index_1 || i <= index_2))
-	{
-		if (i == index_1 || i == index_2)
-		{
-			write(1, "pb\n", 3);
-			pb(edge);
-		}
-		else
-		{
-			ra_index++;
-			write(1, "ra\n", 3);
-			ra(edge);
-		}
-		i++;
-	}
-	while (ra_index != 0 && edge->head_a->next->next != edge->tail_a)
-	{
-		write(1, "rra\n", 4);
-		rra(edge);
-		ra_index--;
-	}
-}
-
-void	send_max_arg_to_a(t_deque_edge *edge, int index_1, int index_2, int range)
-{
-	int		i;
-	int		rb_index;
-
-	i = 0;
-	rb_index = 0;
-	while (i < range && (i <= index_1 || i <= index_2))
-	{
-		if (i == index_1 || i == index_2)
-		{
-			write(1, "pa\n", 3);
-			pa(edge);
-		}
-		else
-		{
-			rb_index++;
-			write(1, "rb\n", 3);
-			rb(edge);
-		}
-		i++;
-	}
-	while (rb_index != 0 && edge->head_b->next->next != edge->tail_b)
-	{
-		write(1, "rrb\n", 4);
-		rrb(edge);
-		rb_index--;
-	}
-}
 
 void	arrange_five_b(t_deque_edge *edge, int range)
 {
@@ -253,27 +114,24 @@ void	reverse_partition_b(t_deque_edge *edge, t_pivot_index *b)
 		}
 		else if (i < b->small_index)
 		{
-			write(1, "rrb\n", 4);	
+			write(1, "rrb\n", 4);
 			rrb(edge);
 		}
 		i++;
 	}
 }
 
-void	B_to_A(t_deque_edge *edge, t_data data, int range)
+void	b_to_a(t_deque_edge *edge, t_data data, int range)
 {
 	t_pivot_index	b;
 
 	ft_memset(&b, 0, sizeof(b));
 	if (range <= 5)
-	{
-		less_than_five_b(edge, range);
-		return ;
-	}
-	define_pivot(edge->head_b, data, range, &b.pivot_l, &b.pivot_s);
+		return (less_than_five_b(edge, range));
+	define_pivot(edge->head_b, data, range, &b);
 	partition_b(edge, &b, range);
-	A_to_B(edge, data, b.big_index);
+	a_to_b(edge, data, b.big_index);
 	reverse_partition_b(edge, &b);
-	A_to_B(edge, data, b.middle_index);
-	B_to_A(edge, data, b.small_index);
+	a_to_b(edge, data, b.middle_index);
+	b_to_a(edge, data, b.small_index);
 }

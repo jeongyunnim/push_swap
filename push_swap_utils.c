@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:58:23 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 18:26:53 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 19:46:32 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	free_all(t_data *data, t_deque_edge *edge)
 	if (data->arr != NULL)
 		free(data->arr);
 	data->arr = NULL;
+	if (data->arr_data != NULL)
+		free(data->arr_data);
+	data->arr_data = NULL;
 	temp = edge->head_a;
 	while (edge->head_a != NULL)
 	{

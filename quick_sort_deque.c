@@ -6,13 +6,13 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:42:38 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 14:42:46 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 21:48:13 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-void	define_pivot(t_deque *edge, t_data data, int range, int *big, int *sml)
+void	define_pivot(t_deque *edge, t_data data, int range, t_pivot_index *x)
 {
 	t_deque	*temp;
 	int		i;
@@ -34,121 +34,106 @@ void	define_pivot(t_deque *edge, t_data data, int range, int *big, int *sml)
 	while (i++ < data.num)
 	{
 		if (data.arr[i] == max)
-			break;
+			break ;
 	}
-	*big = data.arr[i - (range / 3)];
-	*sml = data.arr[i - ((range / 3) * 2)];
+	x->pivot_l = data.arr[i - (range / 3)];
+	x->pivot_s = data.arr[i - ((range / 3) * 2)];
 }
 
-void	arrange_five_a(t_deque_edge *edge, int range)
-{
-	t_deque	*temp;
-	int		num[5];
-	int		min_1;
-	int		min_2;
-	int		i;
-
-	i = -1;
-	temp = edge->head_a;
-	ft_memset(&num, 0, sizeof(num));
-	while (++i < range)
-	{
-		num[i] = temp->num;
-		temp = temp->next;
-	}
-	find_2_min_arg(num, &min_1, &min_2, range);
-	send_min_arg_to_b(edge, min_1, min_2, range);
-	less_than_five_a(edge, range - 2);
-	less_than_five_b(edge, 2);
-}
-
-void	less_than_five_a(t_deque_edge *edge, int range)
-{
-	if (range == 2)
-	{
-		if (edge->head_a->num > edge->head_a->next->num)
-		{
-			write(1, "sa\n", 3);
-			sa(edge);
-		}
-	}
-	else if (range == 3)
-	{
-		arrange_three_a(edge);
-	}
-	else if (range >= 4)
-	{
-		arrange_five_a(edge, range);
-	}
-}	
-
-void	partition_a(t_deque_edge *edge, t_pivot_index *a, int range)
-{
- 	while (a->big_index + a->small_index + a->middle_index < range)
-	{
-		if (edge->head_a->num > a->pivot_l)
-		{
-			a->big_index++;
-			write(1, "ra\n", 3);
-			ra(edge);
-		}
-		else if (edge->head_a->num <= a->pivot_s)
-		{
-			a->small_index++;
-			write(1, "pb\n", 3);
-			pb(edge);
-		}
-		else
-		{
-			a->middle_index++;
-			write(1, "pb\n", 3);
-			pb(edge);
-			if (edge->head_b->next != NULL)
-			{
-				write(1, "rb\n", 3);
-				rb(edge);
-			}
-		}
-	}
-}
-
-void	reverse_partition_a(t_deque_edge *edge, t_pivot_index *a)
+void	find_2_max_arg(int num[5], int *max_1, int *max_2, int range)
 {
 	int	i;
 
-	i = 0;
-	while (i < a->big_index || i < a->middle_index)
+	i = 2;
+	*max_1 = 0;
+	*max_2 = 1;
+	while (i < range)
 	{
-		if (i < a->big_index && i < a->middle_index)
+		if (num[*max_1] < num[i] || num[*max_2] < num[i])
 		{
-			write(1, "rrr\n", 4);
-			rrr(edge);
-		}
-		else if (i < a->big_index)
-		{
-			write(1, "rra\n", 4);
-			rra(edge);
-		}
-		else if (i < a->middle_index)
-		{
-			write(1, "rrb\n", 4);	
-			rrb(edge);
+			if (num[*max_1] > num[*max_2])
+				*max_2 = i;
+			else
+				*max_1 = i;
 		}
 		i++;
 	}
 }
 
-void	A_to_B(t_deque_edge *edge, t_data data, int range)
+void	find_2_min_arg(int num[5], int *min_1, int *min_2, int range)
 {
-	t_pivot_index	a;
+	int	i;
 
-	ft_memset(&a, 0, sizeof(a));
-	if (range <= 4)
-		return (less_than_five_a(edge, range));
-	define_pivot(edge->head_a, data, range, &a.pivot_l, &a.pivot_s);
-	partition_a(edge, &a, range);
-	reverse_partition_a(edge, &a);
-	A_to_B(edge, data, a.big_index);
-	B_to_A(edge, data, a.middle_index);
-	B_to_A(edge, data, a.small_index);
+	i = 2;
+	*min_1 = 0;
+	*min_2 = 1;
+	while (i < range)
+	{
+		if (num[*min_1] > num[i] || num[*min_2] > num[i])
+		{
+			if (num[*min_1] < num[*min_2])
+				*min_2 = i;
+			else
+				*min_1 = i;
+		}
+		i++;
+	}
+}
+
+void	send_min_arg_to_b(t_deque_edge *edge, int idx_1, int idx_2, int range)
+{
+	int		i;
+	int		ra_index;
+
+	i = 0;
+	ra_index = 0;
+	while (i < range && (i <= idx_1 || i <= idx_2))
+	{
+		if (i == idx_1 || i == idx_2)
+		{
+			write(1, "pb\n", 3);
+			pb(edge);
+		}
+		else
+		{
+			ra_index++;
+			write(1, "ra\n", 3);
+			ra(edge);
+		}
+		i++;
+	}
+	while (ra_index-- != 0 && edge->head_a->next->next != edge->tail_a)
+	{
+		write(1, "rra\n", 4);
+		rra(edge);
+	}
+}
+
+void	send_max_arg_to_a(t_deque_edge *edge, int idx_1, int idx_2, int range)
+{
+	int		i;
+	int		rb_index;
+
+	i = 0;
+	rb_index = 0;
+	while (i < range && (i <= idx_1 || i <= idx_2))
+	{
+		if (i == idx_1 || i == idx_2)
+		{
+			write(1, "pa\n", 3);
+			pa(edge);
+		}
+		else
+		{
+			rb_index++;
+			write(1, "rb\n", 3);
+			rb(edge);
+		}
+		i++;
+	}
+	while (rb_index-- != 0 && edge->head_b->next->next != edge->tail_b)
+	{
+		write(1, "rrb\n", 4);
+		rrb(edge);
+	}
 }
