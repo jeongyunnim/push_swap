@@ -210,28 +210,22 @@ void	less_than_five_b(t_deque_edge *edge, int range)
 
 void	partition_b(t_deque_edge *edge, t_pivot_index *b, int range)
 {
-	t_deque	*temp;
-
-	temp = edge->head_b;
 	while (b->big_index + b->small_index + b->middle_index < range)
 	{
-		if (temp->num > b->pivot_l)
+		if (edge->head_b->num > b->pivot_l)
 		{
-			temp = temp->next;
 			b->big_index++;
 			write(1, "pa\n", 3);
 			pa(edge);
 		}
-		else if (temp->num < b->pivot_s)
+		else if (edge->head_b->num < b->pivot_s)
 		{
-			temp = temp->next;
 			b->small_index++;
 			write(1, "rb\n", 3);
 			rb(edge);
 		}
 		else
 		{
-			temp = temp->next;
 			write(1, "pa\nra\n", 6);
 			b->middle_index++;
 			pa(edge);

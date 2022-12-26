@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/25 21:41:40 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 14:56:01 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	*ft_calloc(size_t n, size_t size);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	*ft_memset(void *bytes, int value, size_t len);
+int		ft_isnum(char c);
+int		ft_isspace(char c);
+void	free_all(t_data *data, t_deque_edge *edge);
 
 t_deque	*lstnew(int num);
 t_deque	*pop_head(t_deque **head);
@@ -72,9 +75,20 @@ void	rr(t_deque_edge *edge);
 void	rra(t_deque_edge *edge);
 void	rrb(t_deque_edge *edge);
 void	rrr(t_deque_edge *edge);
+
+int		argument_check(char *arg);
+int		overlap_check(t_data data);
+int		arranged_check_arr(t_data data);
+
 void	print_deque(t_deque_edge *edge);
-void	print_deque_b(t_deque_edge *edge);
+
+int 	parse_data(t_data *data, char *str);
+void	quick_sort_arr(int *arr, int length);
+
 void	arr_to_deque(t_data data, t_deque_edge *edge);
+
+
+void	little_number_arrange(t_deque_edge *edge, t_data data);
 
 void	arrange_five_a(t_deque_edge *edge, int range);
 void	less_than_five_a(t_deque_edge *edge, int range);
@@ -88,5 +102,7 @@ void	B_to_A(t_deque_edge *edge, t_data data, int range);
 void	A_to_B(t_deque_edge *edge, t_data data, int range);
 void	define_pivot(t_deque *edge, t_data data, int range, int *larg_p, int *sml_p);
 void	arrange_three_a(t_deque_edge *edge);
+
+
 
 #endif

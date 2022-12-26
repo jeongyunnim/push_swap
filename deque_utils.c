@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:19:03 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/25 17:35:53 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/26 14:38:19 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,17 +152,4 @@ void	print_deque(t_deque_edge *edge)
 		printf("head_b: %d | tail_b: %d\n", edge->head_b->num, edge->tail_b->num);
 	else
 		printf("head_a: %p\n", edge->head_b);
-}
-
-void    arr_to_deque(t_data data, t_deque_edge *edge)
-{
-	int 	i;
-	t_deque	*new;
-
-	i = -1;
-	while (++i < data.num)
-	{
-		new = lstnew(data.arr[i]);
-		append_tail(&(edge->head_a), &(edge->tail_a), new);
-	}
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/26 13:53:50 by jeseo             #+#    #+#             */
+/*   Updated: 2022/12/26 15:24:50 by jeseo            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./push_swap.h"
 
 int	main(int argc, char **argv)
@@ -33,11 +45,11 @@ int	main(int argc, char **argv)
 		return (write(2, "DATA ARRANGED ALREADY\n", 22));
 	ft_memset(&edge, 0, sizeof(edge));
     arr_to_deque(data, &edge);
+	quick_sort_arr(data.arr, data.num); // 정렬 한 다음에 같은 게 있는지 찾아보자.
+	if (overlap_check(data) == ERROR)
+		return (write(2, "ARGUMENT OVERLAPPED\n", 20));
 	if (data.num > 5)
 	{
-		quick_sort_arr(data.arr, data.num); // 정렬 한 다음에 같은 게 있는지 찾아보자.
-		if (overlap_check(data) == ERROR)
-			return (write(2, "ARGUMENT OVERLAPPED\n", 20));
 		A_to_B(&edge, data, data.num);
 	}
 	else
