@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   reverse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/26 13:53:50 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 21:17:00 by jeseo            ###   ########.fr       */
+/*   Created: 2022/12/22 15:25:17 by jeseo             #+#    #+#             */
+/*   Updated: 2022/12/22 15:44:03 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-int	main(int argc, char **argv)
+void	ra(t_deque_edge *edge)
 {
-	t_deque_edge	edge;
-	t_data			data;
+	t_deque	*target;
 
-	if (argc < 2)
-		exit(EXIT_FAILURE);
-	initialize_structure(&edge, &data, argv);
-	parsing_argument(&edge, &data);
-	if (data.num > 5)
-		a_to_b(&edge, data, data.num);
-	else
-		little_number_arrange(&edge, data);
-	free_all(&data, &edge);
-	return (0);
+	if (edge->head_a == edge->tail_a)
+		return ;
+	target = pop_head(&(edge->head_a));
+	append_tail(&(edge->head_a), &(edge->tail_a), target);
+}
+
+void	rb(t_deque_edge *edge)
+{
+	t_deque	*target;
+
+	if (edge->head_b == edge->tail_b)
+		return ;
+	target = pop_head(&(edge->head_b));
+	append_tail(&(edge->head_b), &(edge->tail_b), target);
+}
+
+void	rr(t_deque_edge *edge)
+{
+	ra(edge);
+	rb(edge);
 }

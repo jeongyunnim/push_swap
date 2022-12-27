@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 18:11:05 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/27 21:31:00 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 100
 # define ERROR -1
 
 typedef struct s_deque
@@ -68,8 +68,9 @@ char	*ft_strnjoin(char **s1, char const *s2, size_t len);
 void	*ft_memset(void *bytes, int value, size_t len);
 int		ft_isnum(char c);
 int		ft_isspace(char c);
-void	free_all(t_data *data, t_deque_edge *edge);
+int		ft_strcmp(const char *str1, const char *str2);
 
+void	free_all(t_data *data, t_deque_edge *edge);
 char	*get_next_line(int fd);
 
 t_deque	*lstnew(int num);
@@ -93,37 +94,10 @@ void	parsing_argument(t_deque_edge *edge, t_data *data);
 void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv);
 
 int		argument_check(char *arg);
-int		overlap_check(t_data data);
 void	free_then_exit(t_deque_edge *edge, t_data *data);
 int		arranged_check_arr(t_data data);
 
-void	arrange_five_a(t_deque_edge *edge, int range);
-void	less_than_five_a(t_deque_edge *edge, int range);
-void	partition_a(t_deque_edge *edge, t_pivot_index *a, int range);
-void	reverse_partition_a(t_deque_edge *edge, t_pivot_index *a);
-void	a_to_b(t_deque_edge *edge, t_data data, int range);
-
-void	arrange_five_b(t_deque_edge *edge, int range);
-void	less_than_five_b(t_deque_edge *edge, int range);
-void	partition_b(t_deque_edge *edge, t_pivot_index *b, int range);
-void	reverse_partition_b(t_deque_edge *edge, t_pivot_index *b);
-void	b_to_a(t_deque_edge *edge, t_data data, int range);
-
-void	arrange_three_a(t_deque_edge *edge);
-void	arrange_three_b(t_deque_edge *edge);
-
 int		parse_data(t_data *data, char *str);
-void	quick_sort_arr(t_data *data);
-
 void	arr_to_deque(t_data *data, t_deque_edge *edge);
-
-void	little_number_arrange(t_deque_edge *edge, t_data data);
-
-void	find_2_min_arg(int num[5], int *min_1, int *min_2, int range);
-void	find_2_max_arg(int num[5], int *max_1, int *max_2, int range);
-void	send_min_arg_to_b(t_deque_edge *edge, int idx_1, int idx_2, int range);
-void	send_max_arg_to_a(t_deque_edge *edge, int idx_1, int idx_2, int range);
-
-void	define_pivot(t_deque *edge, t_data data, int range, t_pivot_index *x);
 
 #endif

@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/26 13:53:50 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 21:17:00 by jeseo            ###   ########.fr       */
+/*   Created: 2022/12/22 15:25:22 by jeseo             #+#    #+#             */
+/*   Updated: 2022/12/22 15:25:47 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
 
-int	main(int argc, char **argv)
+void	sa(t_deque_edge *edge)
 {
-	t_deque_edge	edge;
-	t_data			data;
+	int	temp;
 
-	if (argc < 2)
-		exit(EXIT_FAILURE);
-	initialize_structure(&edge, &data, argv);
-	parsing_argument(&edge, &data);
-	if (data.num > 5)
-		a_to_b(&edge, data, data.num);
-	else
-		little_number_arrange(&edge, data);
-	free_all(&data, &edge);
-	return (0);
+	if (edge->head_a == NULL)
+		return ;
+	temp = edge->head_a->next->num;
+	edge->head_a->next->num = edge->head_a->num;
+	edge->head_a->num = temp;
+}
+
+void	sb(t_deque_edge *edge)
+{
+	int	temp;
+
+	if (edge->head_b == NULL)
+		return ;
+	temp = edge->head_b->next->num;
+	edge->head_b->next->num = edge->head_b->num;
+	edge->head_b->num = temp;
+}
+
+void	ss(t_deque_edge *edge)
+{
+	sa(edge);
+	sb(edge);
 }
