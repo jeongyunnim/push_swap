@@ -6,11 +6,31 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:09:24 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 21:05:58 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/27 21:47:28 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./push_swap.h"
+#include "./push_swap_bonus.h"
+
+static int	overlap_check(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < data->num - 2)
+	{
+		j = i + 1;
+		while (j < data->num - 1)
+		{
+			if (data->arr[i] == data->arr[j])
+				return (ERROR);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 
 void	parsing_argument(t_deque_edge *edge, t_data *data)
 {
@@ -20,6 +40,11 @@ void	parsing_argument(t_deque_edge *edge, t_data *data)
 		free_then_exit(edge, data);
 	}
 	if (arranged_check_arr(*data) == ERROR)
+	{
+		write(2, "Error\n", 6);
+		free_then_exit(edge, data);
+	}
+	if (overlap_check(data) == ERROR)
 	{
 		write(2, "Error\n", 6);
 		free_then_exit(edge, data);
