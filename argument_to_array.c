@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:52:40 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 21:37:09 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/27 17:12:43 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ long long	split_arg(char **data)
 			num *= 10;
 			num += **data - '0';
 		}
-		else
+		if (num < -2147483648 || num > 2147483647)
 		{
-			write(2, "ERROR\nINVALID ARGUMENT\n", 23);
+			write(2, "Error\nINT OVERFLOW\n", 20);
 			exit(EXIT_FAILURE);
 		}
 		(*data)++;
@@ -78,11 +78,6 @@ int	parse_data(t_data *data, char *str)
 	while (str && *str != '\0' && i < data->num)
 	{
 		num = split_arg(&data->arr_data);
-		if (num < -2147483648 || num > 2147483647)
-		{
-			write(2, "ERROR\nINT OVERFLOW\n", 28);
-			return (ERROR);
-		}
 		(data->arr)[i] = num;
 		i++;
 	}
@@ -91,15 +86,20 @@ int	parse_data(t_data *data, char *str)
 	return (0);
 }
 
-void	arr_to_deque(t_data data, t_deque_edge *edge)
+void	arr_to_deque(t_data *data, t_deque_edge *edge)
 {
 	int		i;
 	t_deque	*new;
 
 	i = -1;
-	while (++i < data.num)
+	while (++i < data->num)
 	{
-		new = lstnew(data.arr[i]);
+		new = lstnew(data->arr[i]);
+		if (new == NULL)
+		{
+			write(2, "Error\nSTRUCT ALLOCATE ERROR\n", 28);
+			free_all(data, edge);
+		}
 		append_tail(&(edge->head_a), &(edge->tail_a), new);
 	}
 }

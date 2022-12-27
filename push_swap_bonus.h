@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push_swap_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 16:27:18 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/27 18:11:05 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef PUSH_SWAP_BONUS_H
+# define PUSH_SWAP_BONUS_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <stdlib.h>
 
+# define BUFFER_SIZE 1000
 # define ERROR -1
 
 typedef struct s_deque
@@ -44,6 +45,7 @@ typedef struct s_pivot_index
 	int		pivot_l;
 	int		pivot_s;
 }	t_pivot_index;
+
 typedef struct s_data
 {
 	int		*arr;
@@ -51,13 +53,24 @@ typedef struct s_data
 	int		num;
 }	t_data;
 
+typedef struct s_getline
+{
+	char	buff[BUFFER_SIZE + 1];
+	char	*line;
+	int		flag;
+}	t_getline;
+
 void	*ft_calloc(size_t n, size_t size);
 size_t	ft_strlen(const char *str);
+size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strnjoin(char **s1, char const *s2, size_t len);
 void	*ft_memset(void *bytes, int value, size_t len);
 int		ft_isnum(char c);
 int		ft_isspace(char c);
 void	free_all(t_data *data, t_deque_edge *edge);
+
+char	*get_next_line(int fd);
 
 t_deque	*lstnew(int num);
 t_deque	*pop_head(t_deque **head);

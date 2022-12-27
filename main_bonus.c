@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/26 13:53:50 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 17:13:00 by jeseo            ###   ########.fr       */
+/*   Created: 2022/12/27 17:14:55 by jeseo             #+#    #+#             */
+/*   Updated: 2022/12/27 18:41:18 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./push_swap.h"
+#include "./push_swap_bonus.h"
 
 int	main(int argc, char **argv)
 {
+	char			*buffer;
 	t_deque_edge	edge;
 	t_data			data;
 
@@ -21,10 +22,15 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	initialize_structure(&edge, &data, argv);
 	parsing_argument(&edge, &data);
-	if (data.num > 5)
-		a_to_b(&edge, data, data.num);
-	else
-		little_number_arrange(&edge, data);
-	free_all(&data, &edge);
+	while (1)
+	{
+		buffer = get_next_line(STDIN_FILENO);
+		if (buffer == NULL)
+		{
+			break ; //ctl + d
+		}
+		execute
+	}
+	
 	return (0);
 }
