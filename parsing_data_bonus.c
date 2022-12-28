@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:09:24 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 21:47:28 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/28 21:37:44 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	parsing_argument(t_deque_edge *edge, t_data *data)
 
 void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv)
 {
-	char	*temp;
+	char	*temp1;
+	char	*temp2;
 	int		i;
 
 	ft_memset(data, 0, sizeof(*data));
@@ -63,15 +64,19 @@ void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv)
 	if (data->arr_data == NULL)
 	{
 		write(2, "Erorr\nSTRING ALLOCATE ERROR\n", 28);
+		//ERROR인데 잘못 입력함.
 		free_then_exit(edge, data);
 	}
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		temp = data->arr_data;
 		if (argument_check(argv[i]) == ERROR)
 			free_then_exit(edge, data);
-		data->arr_data = ft_strjoin(data->arr_data, ft_strjoin(argv[i++], " "));
-		free(temp);
+		temp1 = ft_strjoin(argv[i++], " ");
+		temp2 = data->arr_data;
+		data->arr_data = ft_strjoin(data->arr_data, temp1);
+		//temp도 널가드 해줘야했다.
+		free(temp1);
+		free(temp2);
 	}
 }

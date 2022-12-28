@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:52:40 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 21:26:54 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/28 16:19:09 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ long long	split_arg(char **data)
 			num *= 10;
 			num += **data - '0';
 		}
-		if (num < -2147483648 || num > 2147483647)
+		if (num * sign < -2147483648 || num * sign > 2147483647)
 		{
 			write(2, "Error\n", 6);
 			exit(EXIT_FAILURE);

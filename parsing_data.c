@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:09:24 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 20:02:24 by jeseo            ###   ########.fr       */
+/*   Updated: 2022/12/28 18:58:22 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	parsing_argument(t_deque_edge *edge, t_data *data)
 
 void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv)
 {
-	char	*temp;
+	char	*temp1;
+	char	*temp2;
 	int		i;
 
 	ft_memset(data, 0, sizeof(*data));
@@ -49,10 +50,12 @@ void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv)
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		temp = data->arr_data;
 		if (argument_check(argv[i]) == ERROR)
 			free_then_exit(edge, data);
-		data->arr_data = ft_strjoin(data->arr_data, ft_strjoin(argv[i++], " "));
-		free(temp);
+		temp1 = ft_strjoin(argv[i++], " ");
+		temp2 = data->arr_data;
+		data->arr_data = ft_strjoin(data->arr_data, temp1);
+		free(temp1);
+		free(temp2);
 	}
 }
