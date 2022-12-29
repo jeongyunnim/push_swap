@@ -38,31 +38,9 @@ int	argument_check(char *arg)
 	}
 	if (flag == 0)
 	{
-		write(2, "Error\nINVALID ARGUMENT\n", 23);
+		write(2, "Error\n", 6);
 		return (ERROR);
 	}
-	else
-		return (0);
-}
-
-int	arranged_check_arr(t_data data)
-{
-	int	target;
-	int	flag;
-	int	i;
-
-	i = 0;
-	flag = 1;
-	while (i < data.num - 1)
-	{
-		target = *(data.arr);
-		(data.arr)++;
-		if (target > *(data.arr))
-			flag = 0;
-		i++;
-	}
-	if (flag == 1)
-		return (ERROR);
 	else
 		return (0);
 }

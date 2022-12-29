@@ -21,8 +21,8 @@ void	parsing_argument(t_deque_edge *edge, t_data *data)
 	}
 	if (arranged_check_arr(*data) == ERROR)
 	{
-		write(2, "Error\nDATA ARRANGED ALREADY\n", 28);
-		free_then_exit(edge, data);
+		free_all(data, edge);
+		exit(EXIT_SUCCESS);
 	}
 	arr_to_deque(data, edge);
 	quick_sort_arr(data);
@@ -43,18 +43,19 @@ void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv)
 	ft_memset(edge, 0, sizeof(*edge));
 	data->arr_data = (char *)ft_calloc(1, sizeof(char));
 	if (data->arr_data == NULL)
-	{
-		write(2, "Erorr\nSTRING ALLOCATE ERROR\n", 28);
 		free_then_exit(edge, data);
-	}
 	i = 1;
 	while (argv[i] != NULL)
 	{
 		if (argument_check(argv[i]) == ERROR)
 			free_then_exit(edge, data);
 		temp1 = ft_strjoin(argv[i++], " ");
+		if (temp1 == NULL)
+			free_then_exit(edge, data);
 		temp2 = data->arr_data;
 		data->arr_data = ft_strjoin(data->arr_data, temp1);
+		if (data->arr_data == NULL)
+			free_then_exit(edge, data);
 		free(temp1);
 		free(temp2);
 	}

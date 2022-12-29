@@ -39,11 +39,6 @@ void	parsing_argument(t_deque_edge *edge, t_data *data)
 		write(2, "Error\n", 6);
 		free_then_exit(edge, data);
 	}
-	if (arranged_check_arr(*data) == ERROR)
-	{
-		write(2, "Error\n", 6);
-		free_then_exit(edge, data);
-	}
 	if (overlap_check(data) == ERROR)
 	{
 		write(2, "Error\n", 6);
@@ -62,20 +57,19 @@ void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv)
 	ft_memset(edge, 0, sizeof(*edge));
 	data->arr_data = (char *)ft_calloc(1, sizeof(char));
 	if (data->arr_data == NULL)
-	{
-		write(2, "Erorr\nSTRING ALLOCATE ERROR\n", 28);
-		//ERROR인데 잘못 입력함.
 		free_then_exit(edge, data);
-	}
 	i = 1;
 	while (argv[i] != NULL)
 	{
 		if (argument_check(argv[i]) == ERROR)
 			free_then_exit(edge, data);
 		temp1 = ft_strjoin(argv[i++], " ");
+		if (temp1 == NULL)
+			free_then_exit(edge, data);
 		temp2 = data->arr_data;
 		data->arr_data = ft_strjoin(data->arr_data, temp1);
-		//temp도 널가드 해줘야했다.
+		if (data->arr_data == NULL)
+			free_then_exit(edge, data);
 		free(temp1);
 		free(temp2);
 	}
