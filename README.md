@@ -15,15 +15,15 @@ make bonus
 ./checker [numeric argument]
 ```
 
-##COMMAND
-###sa
-###sb
-###ss
-###pa
-###pb
-###ra
-###rb
-###rr
-###rra
-###rrb
-###rrr
+## COMMAND
+### sa
+### sb
+### ss
+### pa
+### pb
+### ra
+### rb
+### rr
+### rra
+### rrb
+### rrr
