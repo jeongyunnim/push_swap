@@ -1,8 +1,5 @@
 # push_swap
 
-Push_swap
-=========
-
 How to use
 ----------
 ```
