@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 21:44:11 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/26 21:53:01 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/01/10 19:38:40 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	a_to_b(t_deque_edge *edge, t_data data, int range)
 	t_pivot_index	a;
 
 	ft_memset(&a, 0, sizeof(a));
-	if (range <= 4)
+	if (range <= 5)
 		return (less_than_five_a(edge, range));
 	define_pivot(edge->head_a, data, range, &a);
 	partition_a(edge, &a, range);

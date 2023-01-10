@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:09:24 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/28 21:37:44 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/01/10 20:13:02 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static int	overlap_check(t_data *data)
 	int	j;
 
 	i = 0;
-	while (i < data->num - 2)
+	while (i < data->num - 1)
 	{
 		j = i + 1;
-		while (j < data->num - 1)
+		while (j < data->num)
 		{
 			if (data->arr[i] == data->arr[j])
 				return (ERROR);

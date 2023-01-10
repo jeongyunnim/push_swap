@@ -6,7 +6,7 @@
 #    By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 16:10:17 by jeseo             #+#    #+#              #
-#    Updated: 2022/12/27 21:04:31 by jeseo            ###   ########.fr        #
+#    Updated: 2023/01/10 19:37:25 by jeseo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,8 @@ SRC			=	./main.c\
 				./total_range_less_than_five.c\
 				./push.c\
 				./swap.c\
-				./reverse.c\
-				./reverse_reverse.c\
+				./rotate.c\
+				./rotate_reverse.c\
 
 SRC_BONUS	=	./main_bonus.c\
 				./deque_utils_bonus.c\
@@ -49,8 +49,8 @@ SRC_BONUS	=	./main_bonus.c\
 				./parsing_data_bonus.c\
 				./push_bonus.c\
 				./swap_bonus.c\
-				./reverse_bonus.c\
-				./reverse_reverse_bonus.c\
+				./rotate_bonus.c\
+				./rotate_reverse_bonus.c\
 				./ft_calloc_bonus.c\
 				./ft_strjoin_bonus.c\
 

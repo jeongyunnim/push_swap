@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 21:31:00 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/01/10 20:09:34 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	rrr(t_deque_edge *edge);
 
 void	parsing_argument(t_deque_edge *edge, t_data *data);
 void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv);
-
 int		argument_check(char *arg);
 void	free_then_exit(t_deque_edge *edge, t_data *data);
 int		arranged_check_arr(t_data data);

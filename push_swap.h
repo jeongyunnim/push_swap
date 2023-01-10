@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/27 16:27:18 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/01/10 19:55:06 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PUSH_SWAP_H
 
 # include <unistd.h>
-# include <stdlib.h>
 # include <stdlib.h>
 
 # define ERROR -1
@@ -42,6 +41,7 @@ typedef struct s_pivot_index
 	int		pivot_l;
 	int		pivot_s;
 }	t_pivot_index;
+
 typedef struct s_data
 {
 	int		*arr;
