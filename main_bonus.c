@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 17:14:55 by jeseo             #+#    #+#             */
-/*   Updated: 2023/01/10 20:11:14 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/01/11 14:00:17 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,8 @@ int	main(int argc, char **argv)
 		if (buffer == NULL)
 			break ;
 		if (execute_command(buffer, &edge) == ERROR)
-		{
-			write(2, "Error\n", 6);
-			exit(EXIT_FAILURE);
-		}
+			return (write(2, "Error\n", 6));
+		free(buffer);
 	}
 	if (arranged_check_deque(&edge) == 0)
 		write(1, "OK\n", 3);
