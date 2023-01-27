@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 17:14:55 by jeseo             #+#    #+#             */
-/*   Updated: 2023/01/11 14:00:17 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/01/27 15:57:30 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	execute_command(char *command, t_deque_edge *edge)
 	return (0);
 }
 
-int	arranged_check_deque(t_deque_edge *edge)
+void	arranged_check_deque(t_deque_edge *edge)
 {
 	t_deque	*temp;
 	int		target;
@@ -59,9 +59,14 @@ int	arranged_check_deque(t_deque_edge *edge)
 	if (edge->head_b != NULL)
 		flag = 1;
 	if (flag == 0)
-		return (0);
+		write(1, "OK\n", 3);
 	else
-		return (ERROR);
+		write(1, "KO\n", 3);
+}
+
+void	leak(void)
+{
+	system("leaks checker");
 }
 
 int	main(int argc, char **argv)
@@ -70,6 +75,7 @@ int	main(int argc, char **argv)
 	t_deque_edge	edge;
 	t_data			data;
 
+	atexit(leak);
 	if (argc < 2)
 		exit(EXIT_FAILURE);
 	initialize_structure(&edge, &data, argv);
@@ -80,13 +86,13 @@ int	main(int argc, char **argv)
 		if (buffer == NULL)
 			break ;
 		if (execute_command(buffer, &edge) == ERROR)
-			return (write(2, "Error\n", 6));
+		{
+			write(1, "Error\n", 6);
+			exit(EXIT_FAILURE);
+		}
 		free(buffer);
 	}
-	if (arranged_check_deque(&edge) == 0)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	arranged_check_deque(&edge);
 	free_all(&data, &edge);
 	return (0);
 }
