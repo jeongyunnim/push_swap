@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2023/01/10 19:55:06 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:19:17 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	parsing_argument(t_deque_edge *edge, t_data *data);
 void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv);
 
 int		argument_check(char *arg);
-int		overlap_check(t_data data);
+int		overlap_check(t_data *data);
 void	free_then_exit(t_deque_edge *edge, t_data *data);
 int		arranged_check_arr(t_data data);
 

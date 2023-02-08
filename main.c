@@ -6,17 +6,23 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:53:50 by jeseo             #+#    #+#             */
-/*   Updated: 2023/01/10 20:05:14 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:23:24 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./push_swap.h"
+
+void	leak(void)
+{
+	system("leaks push_swap");
+}
 
 int	main(int argc, char **argv)
 {
 	t_deque_edge	edge;
 	t_data			data;
 
+	atexit(leak);
 	if (argc < 2)
 		exit(EXIT_FAILURE);
 	initialize_structure(&edge, &data, argv);

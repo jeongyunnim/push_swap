@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2023/01/10 20:09:34 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:22:03 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE 100
+# define BUFFER_SIZE 1024
 # define ERROR -1
 
 typedef struct s_deque

@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:09:24 by jeseo             #+#    #+#             */
-/*   Updated: 2022/12/28 18:58:22 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:20:24 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	parsing_argument(t_deque_edge *edge, t_data *data)
 		write(2, "Error\nINT ARRAY ALLOCATE ERROR\n", 31);
 		free_then_exit(edge, data);
 	}
+	if (overlap_check(data) == ERROR)
+	{
+		write(2, "Error\nARGUMENT OVERLAPPED\n", 26);
+		free_then_exit(edge, data);
+	}
 	if (arranged_check_arr(*data) == ERROR)
 	{
 		free_all(data, edge);
@@ -26,11 +31,6 @@ void	parsing_argument(t_deque_edge *edge, t_data *data)
 	}
 	arr_to_deque(data, edge);
 	quick_sort_arr(data);
-	if (overlap_check(*data) == ERROR)
-	{
-		write(2, "Error\nARGUMENT OVERLAPPED\n", 26);
-		free_then_exit(edge, data);
-	}
 }
 
 void	initialize_structure(t_deque_edge *edge, t_data *data, char **argv)

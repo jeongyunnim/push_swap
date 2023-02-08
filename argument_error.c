@@ -6,12 +6,11 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 13:58:56 by jeseo             #+#    #+#             */
-/*   Updated: 2023/01/10 21:05:27 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/02/08 16:19:38 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 void	free_then_exit(t_deque_edge *edge, t_data *data)
 {
@@ -84,18 +83,20 @@ int	arranged_check_arr(t_data data)
 		return (0);
 }
 
-int	overlap_check(t_data data)
+int	overlap_check(t_data *data)
 {
-	int	temp;
 	int	i;
+	int	j;
 
 	i = 0;
-	while (i < data.num - 1)
+	while (i < data->num - 1)
 	{
-		temp = data.arr[i];
-		if (temp == data.arr[i + 1])
+		j = i + 1;
+		while (j < data->num)
 		{
-			return (ERROR);
+			if (data->arr[i] == data->arr[j])
+				return (ERROR);
+			j++;
 		}
 		i++;
 	}
