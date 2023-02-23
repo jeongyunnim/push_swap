@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 21:59:04 by jeseo             #+#    #+#             */
-/*   Updated: 2023/02/08 16:19:17 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/02/23 14:31:40 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	arrange_five_a(t_deque_edge *edge, int range);
 void	less_than_five_a(t_deque_edge *edge, int range);
 void	partition_a(t_deque_edge *edge, t_pivot_index *a, int range);
 void	reverse_partition_a(t_deque_edge *edge, t_pivot_index *a);
+void	first_partion(t_deque_edge *edge, t_pivot_index *a, int range);
 void	a_to_b(t_deque_edge *edge, t_data data, int range);
 
 void	arrange_five_b(t_deque_edge *edge, int range);

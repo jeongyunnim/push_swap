@@ -6,7 +6,7 @@
 /*   By: jeseo <jeseo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 21:44:11 by jeseo             #+#    #+#             */
-/*   Updated: 2023/01/10 19:38:40 by jeseo            ###   ########.fr       */
+/*   Updated: 2023/02/23 14:32:18 by jeseo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,32 @@ void	reverse_partition_a(t_deque_edge *edge, t_pivot_index *a)
 	}
 }
 
+void	first_partion(t_deque_edge *edge, t_pivot_index *a, int range)
+{
+	while (a->big_index + a->small_index + a->middle_index < range)
+	{
+		if (edge->head_a->num > a->pivot_l)
+		{
+			a->big_index++;
+			write(1, "ra\n", 3);
+			ra(edge);
+		}
+		else if (edge->head_a->num <= a->pivot_s)
+		{
+			a->small_index++;
+			write(1, "pb\nrb\n", 6);
+			pb(edge);
+			rb(edge);
+		}
+		else
+		{
+			a->middle_index++;
+			write(1, "pb\n", 3);
+			pb(edge);
+		}
+	}
+}
+
 void	a_to_b(t_deque_edge *edge, t_data data, int range)
 {
 	t_pivot_index	a;
@@ -114,8 +140,13 @@ void	a_to_b(t_deque_edge *edge, t_data data, int range)
 	if (range <= 5)
 		return (less_than_five_a(edge, range));
 	define_pivot(edge->head_a, data, range, &a);
-	partition_a(edge, &a, range);
-	reverse_partition_a(edge, &a);
+	if (range == data.num)
+		first_partion(edge, &a, range);
+	else
+	{
+		partition_a(edge, &a, range);
+		reverse_partition_a(edge, &a);
+	}
 	a_to_b(edge, data, a.big_index);
 	b_to_a(edge, data, a.middle_index);
 	b_to_a(edge, data, a.small_index);
